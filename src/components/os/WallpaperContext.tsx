@@ -9,10 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  discoverWallpapers,
-  WALLPAPER_STORAGE_KEY,
-} from "@/lib/wallpapers";
+import { wallpapers, WALLPAPER_STORAGE_KEY } from "@/lib/wallpapers";
 
 type WallpaperContextValue = {
   wallpapers: string[];
@@ -24,36 +21,34 @@ type WallpaperContextValue = {
 
 const WallpaperContext = createContext<WallpaperContextValue | null>(null);
 
+function readSaved(): string | null {
+  try {
+    const saved = window.localStorage.getItem(WALLPAPER_STORAGE_KEY);
+    if (saved && (wallpapers as readonly string[]).includes(saved)) return saved;
+  } catch {
+    /* ignore */
+  }
+  return wallpapers[0] ?? null;
+}
+
 export function WallpaperProvider({ children }: { children: ReactNode }) {
-  const [wallpapers, setWallpapers] = useState<string[]>([]);
+  // Instant — no network probing of 80 missing files
+  const list = useMemo((): string[] => [...wallpapers], []);
   const [current, setCurrent] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const found = await discoverWallpapers();
-      if (cancelled) return;
-      setWallpapers(found);
+    const initial = readSaved();
+    setCurrent(initial);
+    setReady(true);
 
-      const saved =
-        typeof window !== "undefined"
-          ? window.localStorage.getItem(WALLPAPER_STORAGE_KEY)
-          : null;
-
-      if (saved && found.includes(saved)) {
-        setCurrent(saved);
-      } else if (found.length > 0) {
-        setCurrent(found[0]);
-      } else {
-        setCurrent(null);
-      }
-      setReady(true);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    // Warm browser cache for all wallpapers in background
+    for (const path of list) {
+      const img = new window.Image();
+      img.decoding = "async";
+      img.src = path;
+    }
+  }, [list]);
 
   const setWallpaper = useCallback((path: string) => {
     setCurrent(path);
@@ -62,18 +57,27 @@ export function WallpaperProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
+    // Prefetch next paint
+    const img = new window.Image();
+    img.src = path;
   }, []);
 
   const cycleNext = useCallback(() => {
-    if (wallpapers.length === 0) return;
-    const idx = current ? wallpapers.indexOf(current) : -1;
-    const next = wallpapers[(idx + 1) % wallpapers.length];
+    if (list.length === 0) return;
+    const idx = current ? list.findIndex((p) => p === current) : -1;
+    const next = list[(Math.max(idx, -1) + 1) % list.length]!;
     setWallpaper(next);
-  }, [wallpapers, current, setWallpaper]);
+  }, [list, current, setWallpaper]);
 
   const value = useMemo(
-    () => ({ wallpapers, current, ready, setWallpaper, cycleNext }),
-    [wallpapers, current, ready, setWallpaper, cycleNext],
+    () => ({
+      wallpapers: list,
+      current,
+      ready,
+      setWallpaper,
+      cycleNext,
+    }),
+    [list, current, ready, setWallpaper, cycleNext],
   );
 
   return (

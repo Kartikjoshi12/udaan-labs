@@ -27,7 +27,17 @@ Very small files look blurry when stretched to full screen.
 
 ## After pasting
 
-Refresh the site (`Ctrl + Shift + R`).  
-The desktop will pick a wallpaper from this folder automatically.
+1. Add the filename to `src/lib/wallpapers.ts` (fast load — no scanning)
+2. Refresh (`Ctrl + Shift + R`)
+3. Open the **Wallpaper** app to switch
 
-If you use a custom filename (e.g. `office-sky.png`), tell the assistant and they’ll add it to the list.
+Example in `wallpapers.ts`:
+
+```ts
+export const wallpapers = [
+  "/wallpapers/VibrantFlower.jfif",
+  "/wallpapers/GrassMedow.jfif",
+  "/wallpapers/Space.jfif",
+  "/wallpapers/your-new-file.jpg", // add here
+];
+```
