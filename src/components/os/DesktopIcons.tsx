@@ -23,8 +23,7 @@ const defaultPositions: Record<AppId, Pos> = {
   projects: { x: 28, y: 272 },
   process: { x: 140, y: 64 },
   contact: { x: 140, y: 168 },
-  wallpaper: { x: 140, y: 272 },
-  tictactoe: { x: 252, y: 64 },
+  tictactoe: { x: 140, y: 272 },
 };
 
 const DRAG_THRESHOLD = 6;
@@ -103,7 +102,7 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
   );
 
   return (
-    <div className="absolute inset-0 z-20">
+    <div className="absolute inset-0 z-20 pointer-events-none">
       {apps.map((app) => {
         const p = positions[app.id];
         const isDragging = draggingId === app.id;
@@ -113,18 +112,18 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
             type="button"
             style={{ left: p.x, top: p.y, zIndex: isDragging ? 70 : 20 }}
             onPointerDown={(e) => onPointerDown(app.id, e)}
-            className={`absolute flex w-[104px] flex-col items-center gap-2 p-1 text-center focus:outline-none ${
-              isDragging ? "cursor-grabbing" : "cursor-grab"
+            className={`pointer-events-auto absolute flex w-[90px] flex-col items-center gap-1.5 p-1 text-center focus:outline-none group ${
+              isDragging ? "cursor-grabbing opacity-90 scale-105" : "cursor-grab"
             }`}
             title="Drag to move · click to open"
           >
             <span
-              className="pointer-events-none icon-tile flex h-[72px] w-[72px] items-center justify-center"
+              className="pointer-events-none icon-tile flex h-14 w-14 items-center justify-center bg-paper relative group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
               style={{ backgroundColor: app.fill }}
             >
-              <IconArt id={app.id} size={48} />
+              <IconArt id={app.id} size={30} />
             </span>
-            <span className="pointer-events-none max-w-[104px] border-2 border-ink bg-cream px-2 py-1 text-[11px] text-ink shadow-[3px_3px_0_0_#0a0a0a]">
+            <span className="pointer-events-none max-w-[88px] truncate border border-ink bg-cream px-1.5 py-0.5 font-mono text-[11px] font-semibold text-ink shadow-[2px_2px_0_0_#111111]">
               {app.label}
             </span>
           </button>

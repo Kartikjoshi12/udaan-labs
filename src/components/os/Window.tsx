@@ -286,7 +286,7 @@ export function Window({
               height: size.h,
             }
       }
-      className={`absolute overflow-hidden border-[3px] border-ink bg-window nb-shadow-lg ${
+      className={`absolute overflow-hidden border-2 border-ink bg-cream nb-shadow-lg ${
         dragging || resizing ? "" : "os-window-enter"
       }`}
     >
@@ -294,7 +294,7 @@ export function Window({
         data-window-titlebar
         onPointerDown={onTitlePointerDown}
         onDoubleClick={onToggleMaximize}
-        className={`flex h-11 shrink-0 items-center gap-3 border-b-[3px] border-ink bg-titlebar px-2 ${
+        className={`flex h-9 shrink-0 items-center justify-between border-b-2 border-ink bg-titlebar px-2 select-none ${
           maximized
             ? "cursor-default"
             : dragging
@@ -302,51 +302,59 @@ export function Window({
               : "cursor-grab"
         }`}
       >
-        <div
-          className="flex items-center gap-1"
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-            className="flex h-7 w-7 items-center justify-center border-[3px] border-ink bg-rust text-cream"
+        <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-1.5"
+            onPointerDown={(e) => e.stopPropagation()}
           >
-            <Close width={16} height={16} className="pixel-icon" />
-          </button>
-          <button
-            type="button"
-            aria-label="Minimize"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-            className="flex h-7 w-7 items-center justify-center border-[3px] border-ink bg-mustard text-ink"
-          >
-            <Minus width={16} height={16} className="pixel-icon" />
-          </button>
-          <button
-            type="button"
-            aria-label="Maximize"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleMaximize();
-            }}
-            className="flex h-7 w-7 items-center justify-center border-[3px] border-ink bg-olive text-ink"
-          >
-            <Checkbox width={16} height={16} className="pixel-icon" />
-          </button>
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
+              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-orange hover:text-cream active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+            >
+              <Close width={12} height={12} className="pixel-icon" />
+            </button>
+            <button
+              type="button"
+              aria-label="Minimize"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
+              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-yellow active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+            >
+              <Minus width={12} height={12} className="pixel-icon" />
+            </button>
+            <button
+              type="button"
+              aria-label="Maximize"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleMaximize();
+              }}
+              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-green-soft active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+            >
+              <Checkbox width={12} height={12} className="pixel-icon" />
+            </button>
+          </div>
         </div>
-        <p className="pointer-events-none flex-1 truncate text-center text-sm font-semibold text-ink">
+
+        <p className="pointer-events-none mx-2 flex-1 truncate text-center font-[family-name:var(--font-space-grotesk)] text-xs font-bold text-ink">
           {title}
         </p>
-        <span className="w-8" aria-hidden />
+
+        <div className="w-12 text-right">
+          <span className="font-mono text-[9px] text-faint uppercase tracking-wider">
+            [UL]
+          </span>
+        </div>
       </div>
 
-      <div className="h-[calc(100%-2.75rem)] overflow-y-auto overscroll-contain bg-cream p-4 md:p-5">
+      <div className="h-[calc(100%-2.25rem)] overflow-y-auto overscroll-contain bg-cream p-4 md:p-5">
         {children}
       </div>
 
@@ -390,21 +398,21 @@ export function Window({
           <div
             data-resize
             onPointerDown={onResizePointerDown("se")}
-            className="absolute bottom-0 right-0 z-30 flex h-5 w-5 cursor-nwse-resize items-end justify-end border-l-[3px] border-t-[3px] border-ink bg-mustard touch-none"
+            className="absolute bottom-0 right-0 z-30 flex h-4 w-4 cursor-nwse-resize items-end justify-end border-l-2 border-t-2 border-ink bg-titlebar touch-none"
             title="Drag to resize"
             aria-label="Resize window"
           >
             <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
               aria-hidden
               className="m-0.5"
             >
               <path
-                d="M3 11 H11 M7 11 V7 M11 11 V3"
-                stroke="#0a0a0a"
-                strokeWidth="2"
+                d="M2 9 H9 M5 9 V5 M9 9 V2"
+                stroke="#111111"
+                strokeWidth="1.5"
                 fill="none"
               />
             </svg>

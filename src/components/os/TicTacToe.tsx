@@ -83,21 +83,21 @@ export function TicTacToe() {
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 border-[3px] border-ink bg-paper p-3">
-        <div className="border-2 border-ink bg-mustard px-2 py-2 text-center">
-          <p className="text-xs text-muted">X</p>
+      <div className="grid grid-cols-3 gap-2 border-2 border-ink bg-paper p-3 font-mono">
+        <div className="border border-ink bg-yellow px-2 py-2 text-center shadow-[1px_1px_0_0_#111111]">
+          <p className="text-[10px] uppercase font-bold text-muted">Player X</p>
           <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.X}
           </p>
         </div>
-        <div className="border-2 border-ink bg-cream px-2 py-2 text-center">
-          <p className="text-xs text-muted">Draw</p>
+        <div className="border border-ink bg-cream px-2 py-2 text-center shadow-[1px_1px_0_0_#111111]">
+          <p className="text-[10px] uppercase font-bold text-muted">Draws</p>
           <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.draw}
           </p>
         </div>
-        <div className="border-2 border-ink bg-blue px-2 py-2 text-center text-cream">
-          <p className="text-xs text-cream/80">O</p>
+        <div className="border border-ink bg-paper-2 px-2 py-2 text-center shadow-[1px_1px_0_0_#111111]">
+          <p className="text-[10px] uppercase font-bold text-muted">Player O</p>
           <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.O}
           </p>
@@ -105,14 +105,14 @@ export function TicTacToe() {
       </div>
 
       <div
-        className={`border-[3px] border-ink px-3 py-2 text-center text-sm font-semibold ${
+        className={`border-2 border-ink px-3 py-2 text-center font-mono text-xs font-bold tracking-wider uppercase ${
           result === "X"
-            ? "bg-mustard"
+            ? "bg-yellow text-ink"
             : result === "O"
-              ? "bg-blue text-cream"
+              ? "bg-orange text-cream"
               : result === "draw"
                 ? "bg-paper-2"
-                : "bg-cream"
+                : "bg-cream text-ink"
         }`}
       >
         {status}
@@ -125,17 +125,17 @@ export function TicTacToe() {
             type="button"
             onClick={() => play(i)}
             disabled={locked || Boolean(cell)}
-            className="flex aspect-square items-center justify-center border-[3px] border-ink bg-cream nb-shadow-sm transition enabled:hover:-translate-x-0.5 enabled:hover:-translate-y-0.5 enabled:hover:shadow-[5px_5px_0_0_#0a0a0a] disabled:cursor-default"
+            className="flex aspect-square items-center justify-center border-2 border-ink bg-cream nb-shadow-sm transition enabled:hover:-translate-x-0.5 enabled:hover:-translate-y-0.5 enabled:hover:shadow-[3px_3px_0_0_#111111] disabled:cursor-default"
             aria-label={`Cell ${i + 1}${cell ? `, ${cell}` : ""}`}
           >
             {cell === "X" && (
-              <Close width={40} height={40} className="pixel-icon text-ink" />
+              <Close width={36} height={36} className="pixel-icon text-ink" />
             )}
             {cell === "O" && (
               <Checkbox
-                width={40}
-                height={40}
-                className="pixel-icon text-blue"
+                width={36}
+                height={36}
+                className="pixel-icon text-orange"
               />
             )}
           </button>
@@ -145,10 +145,10 @@ export function TicTacToe() {
       <button
         type="button"
         onClick={resetBoard}
-        className="nb-btn flex min-h-11 w-full items-center justify-center gap-2 text-xs"
+        className="nb-btn flex min-h-10 w-full items-center justify-center gap-2 font-mono text-xs"
       >
-        <Reload width={18} height={18} className="pixel-icon" />
-        New round
+        <Reload width={14} height={14} className="pixel-icon" />
+        <span>RESTART ROUND</span>
       </button>
     </div>
   );

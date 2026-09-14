@@ -7,41 +7,36 @@ import { DesktopIcons } from "./DesktopIcons";
 import { MobileApp } from "./MobileApp";
 import { MobileHome } from "./MobileHome";
 import { Taskbar } from "./Taskbar";
-import { WallpaperBg } from "./WallpaperBg";
-import { WallpaperProvider } from "./WallpaperContext";
 import { Window } from "./Window";
 import { WindowContent } from "./WindowContent";
 
 const titles: Record<AppId, string> = {
-  about: site.name,
-  services: "What we build",
-  projects: "Work",
-  process: "How we work",
-  contact: "Contact",
-  wallpaper: "Wallpaper",
+  about: "Studio Overview",
+  services: "What We Build",
+  projects: "Selected Work",
+  process: "How We Work",
+  contact: "Start a Project",
   tictactoe: "Tic Tac Toe",
 };
 
-/** Where each window opens — spread out so they don't stack */
+/** Where each window opens — offset editorial composition with room on the left for icons */
 const startPos: Record<AppId, { x: number; y: number }> = {
-  about: { x: 380, y: 72 },
-  services: { x: 460, y: 96 },
-  projects: { x: 340, y: 110 },
-  process: { x: 500, y: 120 },
-  contact: { x: 400, y: 140 },
-  wallpaper: { x: 520, y: 80 },
-  tictactoe: { x: 560, y: 100 },
+  about: { x: 270, y: 52 },
+  projects: { x: 300, y: 52 },
+  services: { x: 320, y: 56 },
+  process: { x: 340, y: 60 },
+  contact: { x: 310, y: 52 },
+  tictactoe: { x: 420, y: 64 },
 };
 
-/** Compact default sizes (still resizable) */
+/** Expansive default sizes — much wider with editorial breathing room */
 const startSize: Record<AppId, { w: number; h: number }> = {
-  about: { w: 440, h: 360 },
-  services: { w: 420, h: 340 },
-  projects: { w: 460, h: 380 },
-  process: { w: 400, h: 340 },
-  contact: { w: 400, h: 360 },
-  wallpaper: { w: 420, h: 340 },
-  tictactoe: { w: 360, h: 480 },
+  about: { w: 820, h: 540 },
+  projects: { w: 880, h: 560 },
+  services: { w: 820, h: 520 },
+  process: { w: 780, h: 520 },
+  contact: { w: 780, h: 520 },
+  tictactoe: { w: 420, h: 520 },
 };
 
 function isPhone() {
@@ -109,9 +104,7 @@ export function Desktop() {
   }
 
   return (
-    <WallpaperProvider>
     <div className="os-wallpaper relative h-[100dvh] w-full overflow-hidden text-ink">
-      <WallpaperBg />
       <div className="absolute inset-0 z-[1] md:hidden">
         <MobileHome clock={clock} onOpen={openApp} />
         {mobileApp && (
@@ -126,20 +119,29 @@ export function Desktop() {
       </div>
 
       <div className="absolute inset-0 z-[1] hidden md:block">
-        <div className="absolute inset-x-0 top-0 z-40 flex h-11 items-center justify-between border-b-[3px] border-ink bg-mustard px-3">
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex h-6 w-6 items-center justify-center border-[2px] border-ink bg-ink text-[9px] text-cream">
-              UL
-            </span>
-            <span className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold tracking-tight">
-              {site.name}
-            </span>
-            <span className="hidden text-xs text-ink/70 sm:inline">
-              desktop
+        {/* Editorial Top System Bar */}
+        <div className="absolute inset-x-0 top-0 z-40 flex h-9 items-center justify-between border-b-2 border-ink bg-paper px-3 text-ink">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold tracking-tight">
+              <span className="inline-flex h-5 w-5 items-center justify-center border border-ink bg-ink text-[10px] text-cream font-mono">
+                UL
+              </span>
+              <span>{site.name}</span>
+            </div>
+            <span className="text-faint text-xs">/</span>
+            <span className="font-mono text-[11px] text-muted tracking-wider">
+              INDEPENDENT SOFTWARE STUDIO
             </span>
           </div>
-          <div className="border-[2px] border-ink bg-cream px-2 py-0.5 text-xs tabular-nums">
-            {clock}
+
+          <div className="flex items-center gap-3 font-mono text-xs">
+            <div className="hidden lg:flex items-center gap-2 border border-ink bg-cream px-2 py-0.5 text-[10px] text-muted">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-green" />
+              <span>AVAILABLE FOR NEW WORK</span>
+            </div>
+            <div className="border border-ink bg-cream px-2 py-0.5 text-[11px] tabular-nums font-mono font-medium shadow-[1px_1px_0_0_#111111]">
+              {clock}
+            </div>
           </div>
         </div>
 
@@ -147,9 +149,14 @@ export function Desktop() {
 
         {openApps.length === 0 && (
           <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
-            <p className="border-[3px] border-ink bg-cream px-4 py-2 text-center text-sm">
-              Double-click an icon to open a window. Drag icons or title bars to move.
-            </p>
+            <div className="border-2 border-ink bg-cream px-5 py-3 text-center text-sm nb-shadow">
+              <p className="font-mono font-bold text-xs uppercase tracking-wider text-faint mb-1">
+                Workspace Idle
+              </p>
+              <p className="text-xs text-muted">
+                Click any desktop icon or use the studio launcher below to inspect our work.
+              </p>
+            </div>
           </div>
         )}
 
@@ -175,34 +182,37 @@ export function Desktop() {
         ))}
 
         {startOpen && (
-          <div className="absolute bottom-[4.5rem] left-2 z-[110] w-[min(260px,calc(100%-1rem))] border-[3px] border-ink bg-paper nb-shadow-lg">
-            <div className="border-b-[3px] border-ink bg-ink px-3 py-2 text-cream">
-              <p className="font-[family-name:var(--font-space-grotesk)] text-base font-bold">
-                {site.name}
+          <div className="absolute bottom-14 left-3 z-[110] w-[min(300px,calc(100%-1.5rem))] border-2 border-ink bg-cream nb-shadow-lg">
+            <div className="border-b-2 border-ink bg-paper p-3">
+              <div className="flex items-center justify-between">
+                <p className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold tracking-tight">
+                  {site.name}
+                </p>
+                <span className="annotation-tag text-[9px] bg-yellow">ONLINE</span>
+              </div>
+              <p className="mt-1 font-mono text-[11px] text-faint">
+                Independent Digital Engineering Studio
               </p>
-              <p className="text-xs text-cream/70">Apps</p>
             </div>
-            <ul className="p-0">
+            <ul className="p-1">
               {(
                 [
-                  ["about", "About"],
-                  ["services", "What we build"],
-                  ["projects", "Work"],
-                  ["process", "How we work"],
-                  ["contact", "Contact"],
-                  ["wallpaper", "Wallpaper"],
-                  ["tictactoe", "Tic Tac Toe"],
+                  ["about", "Studio Overview", "01"],
+                  ["projects", "Selected Work", "02"],
+                  ["services", "Capabilities", "03"],
+                  ["process", "Development Method", "04"],
+                  ["contact", "Contact & Dispatch", "05"],
+                  ["tictactoe", "Workshop Mini-Game", "06"],
                 ] as const
-              ).map(([id, label], i) => (
+              ).map(([id, label, num]) => (
                 <li key={id}>
                   <button
                     type="button"
                     onClick={() => openApp(id)}
-                    className={`flex w-full items-center gap-2 border-b-[3px] border-ink px-3 py-2.5 text-left text-sm last:border-b-0 hover:bg-mustard ${
-                      i % 2 === 0 ? "bg-cream" : "bg-paper"
-                    }`}
+                    className="flex w-full items-center justify-between border border-transparent px-2.5 py-2 text-left font-mono text-xs hover:border-ink hover:bg-paper transition-all"
                   >
-                    {label}
+                    <span className="font-medium text-ink">{label}</span>
+                    <span className="text-[10px] text-faint">[{num}]</span>
                   </button>
                 </li>
               ))}
@@ -220,6 +230,5 @@ export function Desktop() {
         />
       </div>
     </div>
-    </WallpaperProvider>
   );
 }
