@@ -108,8 +108,7 @@ body {
   color: var(--ink);
   font-family: inherit;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   box-shadow: 4px 4px 0 0 #0a0a0a;
   transition: transform 60ms steps(1), box-shadow 60ms steps(1);
 }

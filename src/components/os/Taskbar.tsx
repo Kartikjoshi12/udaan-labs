@@ -29,7 +29,7 @@ export function Taskbar({
         <button
           type="button"
           onClick={onToggleStart}
-          className="relative flex h-11 items-center gap-2 overflow-hidden border-[3px] border-ink px-3 text-xs font-black uppercase tracking-wide nb-shadow-sm"
+          className="relative flex h-11 items-center gap-2 overflow-hidden border-[3px] border-ink px-3 text-xs font-bold nb-shadow-sm"
           style={{
             background: startOpen ? "#ffd60a" : "#0a0a0a",
             color: startOpen ? "#0a0a0a" : "#fff8e7",

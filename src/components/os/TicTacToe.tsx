@@ -72,42 +72,40 @@ export function TicTacToe() {
     <div className="mx-auto flex max-w-sm flex-col gap-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="flex items-center gap-2 font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
+          <h2 className="flex items-center gap-2 font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
             <Trophy width={24} height={24} className="pixel-icon" />
             Tic Tac Toe
           </h2>
-          <p className="mt-1 text-xs font-bold uppercase tracking-wide text-muted">
-            2 players · same device
-          </p>
+          <p className="mt-1 text-sm text-muted">Two players, one screen.</p>
         </div>
         <button type="button" onClick={resetAll} className="nb-btn px-3 py-2 text-[10px]">
           Reset score
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 border-[3px] border-ink bg-paper p-3 nb-shadow">
-        <div className="border-[3px] border-ink bg-mustard px-2 py-2 text-center">
-          <p className="text-[9px] font-black uppercase">X</p>
-          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-black">
+      <div className="grid grid-cols-3 gap-2 border-[3px] border-ink bg-paper p-3">
+        <div className="border-2 border-ink bg-mustard px-2 py-2 text-center">
+          <p className="text-xs text-muted">X</p>
+          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.X}
           </p>
         </div>
-        <div className="border-[3px] border-ink bg-cream px-2 py-2 text-center">
-          <p className="text-[9px] font-black uppercase">Draw</p>
-          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-black">
+        <div className="border-2 border-ink bg-cream px-2 py-2 text-center">
+          <p className="text-xs text-muted">Draw</p>
+          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.draw}
           </p>
         </div>
-        <div className="border-[3px] border-ink bg-blue px-2 py-2 text-center text-cream">
-          <p className="text-[9px] font-black uppercase">O</p>
-          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-black">
+        <div className="border-2 border-ink bg-blue px-2 py-2 text-center text-cream">
+          <p className="text-xs text-cream/80">O</p>
+          <p className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
             {score.O}
           </p>
         </div>
       </div>
 
       <div
-        className={`border-[3px] border-ink px-3 py-2 text-center text-sm font-black uppercase tracking-wide nb-shadow-sm ${
+        className={`border-[3px] border-ink px-3 py-2 text-center text-sm font-semibold ${
           result === "X"
             ? "bg-mustard"
             : result === "O"

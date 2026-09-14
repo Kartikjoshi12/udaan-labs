@@ -30,7 +30,7 @@ export function MobileApp({ id, clock, onClose, children }: MobileAppProps) {
         >
           ← Back
         </button>
-        <p className="min-w-0 flex-1 truncate text-center text-xs font-black uppercase tracking-wider">
+        <p className="min-w-0 flex-1 truncate text-center text-sm font-semibold">
           {app?.label ?? "App"}
         </p>
         <span className="w-16" aria-hidden />

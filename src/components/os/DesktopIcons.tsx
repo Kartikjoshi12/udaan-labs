@@ -124,7 +124,7 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
             >
               <IconArt id={app.id} size={48} />
             </span>
-            <span className="pointer-events-none max-w-[104px] border-[3px] border-ink bg-cream px-2 py-1 text-[10px] font-black uppercase tracking-wide text-ink shadow-[4px_4px_0_0_#0a0a0a]">
+            <span className="pointer-events-none max-w-[104px] border-2 border-ink bg-cream px-2 py-1 text-[11px] text-ink shadow-[3px_3px_0_0_#0a0a0a]">
               {app.label}
             </span>
           </button>

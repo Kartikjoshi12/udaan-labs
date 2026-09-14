@@ -3,7 +3,6 @@
 import { FormEvent, useState } from "react";
 import { site } from "@/lib/site";
 import type { AppId } from "./apps";
-import { DoodleArrow, DoodleSquiggle, DoodleStar } from "./Doodles";
 import { PixelPhoto } from "./PixelPhoto";
 import { TicTacToe } from "./TicTacToe";
 import { useWallpaper } from "./WallpaperContext";
@@ -27,16 +26,14 @@ export function WindowContent({ id }: { id: AppId }) {
   }
 }
 
-function BrutalImage({
+function FrameImage({
   src,
   alt,
   className = "",
-  pixelSize = 3,
 }: {
   src: string;
   alt: string;
   className?: string;
-  pixelSize?: number;
 }) {
   return (
     <div
@@ -45,7 +42,6 @@ function BrutalImage({
       <PixelPhoto
         src={src}
         alt={alt}
-        pixelSize={pixelSize}
         className="absolute inset-0 h-full w-full"
       />
     </div>
@@ -55,65 +51,51 @@ function BrutalImage({
 function AboutWindow() {
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden border-[3px] border-ink bg-blue text-cream nb-shadow">
-        <div className="relative h-40 w-full border-b-[3px] border-ink sm:h-48">
+      <div className="overflow-hidden border-[3px] border-ink bg-ink text-cream">
+        <div className="relative h-36 w-full border-b-[3px] border-ink sm:h-44">
           <PixelPhoto
             src={site.images.aboutHero}
-            alt="Product studio workspace"
-            pixelSize={3}
+            alt="Desk and build notes"
             className="absolute inset-0 h-full w-full"
           />
         </div>
-        <div className="relative p-4">
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-mustard">
-            {site.hero.eyebrow}
-          </p>
-          <h2 className="mt-2 font-[family-name:var(--font-space-grotesk)] text-2xl font-black tracking-tight md:text-3xl">
+        <div className="p-4">
+          <p className="text-xs text-mustard">{site.hero.eyebrow}</p>
+          <h2 className="mt-1 font-[family-name:var(--font-space-grotesk)] text-2xl font-bold tracking-tight md:text-3xl">
             {site.name}
           </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/90">
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/85">
             {site.hero.subtitle}
           </p>
-          <DoodleStar className="absolute -right-1 top-2 h-10 w-10" />
-          <DoodleSquiggle className="mt-3 h-6 w-24 text-mustard" />
         </div>
       </div>
 
-      <p className="border-[3px] border-ink bg-mustard px-4 py-3 text-sm font-black nb-shadow-sm">
+      <p className="border-[3px] border-ink bg-mustard px-4 py-3 text-sm font-semibold leading-snug">
         {site.tagline}
       </p>
 
-      <div className="grid gap-3 sm:grid-cols-[1.1fr_0.9fr] sm:items-stretch">
-        <div className="grid grid-cols-2 gap-3">
-          {site.stats.map((stat, i) => (
-            <div
-              key={stat.label}
-              className="border-[3px] border-ink p-3 nb-shadow-sm"
-              style={{
-                backgroundColor: ["#ffd60a", "#ff4d2e", "#7cb518", "#ff6b9d"][
-                  i % 4
-                ],
-                color: i % 4 === 1 ? "#fff8e7" : "#0a0a0a",
-              }}
+      <div className="grid gap-3 sm:grid-cols-[1fr_0.85fr] sm:items-stretch">
+        <ul className="grid grid-cols-2 gap-2">
+          {site.facts.map((fact) => (
+            <li
+              key={fact.label}
+              className="border-[3px] border-ink bg-paper px-3 py-2.5"
             >
-              <p className="font-[family-name:var(--font-space-grotesk)] text-xl font-black">
-                {stat.value}
+              <p className="text-[10px] uppercase tracking-wide text-muted">
+                {fact.label}
               </p>
-              <p className="mt-1 text-[10px] font-black uppercase tracking-wide opacity-80">
-                {stat.label}
+              <p className="mt-1 font-[family-name:var(--font-space-grotesk)] text-sm font-bold">
+                {fact.value}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
-        <div className="border-[3px] border-ink bg-cream p-2 nb-shadow-sm">
-          <BrutalImage
+        </ul>
+        <div className="border-[3px] border-ink bg-cream p-2">
+          <FrameImage
             src={site.images.team}
-            alt="Team collaborating"
-            className="h-full min-h-[140px] w-full"
+            alt="Working together"
+            className="h-full min-h-[132px] w-full"
           />
-          <p className="mt-2 text-center text-[10px] font-black uppercase tracking-wide">
-            studio.jpg
-          </p>
         </div>
       </div>
 
@@ -125,31 +107,27 @@ function AboutWindow() {
 function ServicesWindow() {
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
-          Services
-        </h2>
-        <DoodleStar className="h-5 w-5" />
-      </div>
+      <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
+        What we build
+      </h2>
       <div className="grid gap-4">
-        {site.services.map((service, i) => (
+        {site.services.map((service) => (
           <article
             key={service.title}
-            className="grid gap-0 overflow-hidden border-[3px] border-ink bg-paper nb-shadow sm:grid-cols-[160px_1fr]"
+            className="grid gap-0 overflow-hidden border-[3px] border-ink bg-paper sm:grid-cols-[148px_1fr]"
           >
-            <BrutalImage
+            <FrameImage
               src={service.image}
               alt={service.title}
-              className="h-36 w-full sm:h-full sm:min-h-[140px]"
+              className="h-32 w-full sm:h-full sm:min-h-[128px]"
             />
             <div className="border-t-[3px] border-ink p-4 sm:border-l-[3px] sm:border-t-0">
-              <p className="inline-block border-[3px] border-ink bg-blue px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-cream">
-                0{i + 1}
-              </p>
-              <h3 className="mt-2 font-[family-name:var(--font-space-grotesk)] text-lg font-black">
+              <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
                 {service.title}
               </h3>
-              <p className="mt-2 text-sm font-medium text-muted">{service.body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {service.body}
+              </p>
             </div>
           </article>
         ))}
@@ -161,38 +139,40 @@ function ServicesWindow() {
 function ProjectsWindow() {
   return (
     <div className="space-y-4">
-      <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
-        Projects
-      </h2>
-      <p className="text-xs font-bold uppercase tracking-wide text-muted">
-        Placeholder shots — swap with your real screenshots anytime
-      </p>
+      <div>
+        <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
+          Selected work
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          A few recent builds. Swap these for your real screenshots when ready.
+        </p>
+      </div>
       <div className="grid gap-4">
         {site.projects.map((project) => (
           <article
             key={project.title}
-            className="overflow-hidden border-[3px] border-ink bg-paper nb-shadow"
+            className="overflow-hidden border-[3px] border-ink bg-paper"
           >
-            <BrutalImage
+            <FrameImage
               src={project.image}
               alt={`${project.title} preview`}
-              className="h-44 w-full sm:h-52"
+              className="h-40 w-full sm:h-48"
             />
             <div className="border-t-[3px] border-ink p-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-black">
+              <div className="flex flex-wrap items-baseline gap-2">
+                <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold">
                   {project.title}
                 </h3>
-                <span className="border-[3px] border-ink bg-rust px-2 py-0.5 text-[10px] font-black uppercase text-cream">
-                  {project.type}
-                </span>
+                <span className="text-xs text-muted">{project.type}</span>
               </div>
-              <p className="mt-2 text-sm font-medium text-muted">{project.blurb}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {project.blurb}
+              </p>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="border-[3px] border-ink bg-mustard px-2 py-0.5 text-[10px] font-black uppercase"
+                    className="border-2 border-ink bg-cream px-2 py-0.5 text-[11px]"
                   >
                     {tag}
                   </li>
@@ -209,28 +189,34 @@ function ProjectsWindow() {
 function ProcessWindow() {
   return (
     <div className="space-y-4">
-      <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
-        Process
-      </h2>
+      <div>
+        <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
+          How we work
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          Short loop. You always know what we’re doing this week.
+        </p>
+      </div>
       <ol className="space-y-3">
         {site.process.map((step) => (
           <li
             key={step.step}
-            className="flex gap-3 border-[3px] border-ink bg-paper p-4 nb-shadow"
+            className="flex gap-3 border-[3px] border-ink bg-paper p-4"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center border-[3px] border-ink bg-ink text-[11px] font-black text-cream">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center border-[3px] border-ink bg-mustard text-sm font-bold">
               {step.step}
             </span>
             <div>
-              <h3 className="font-[family-name:var(--font-space-grotesk)] font-black">
+              <h3 className="font-[family-name:var(--font-space-grotesk)] font-bold">
                 {step.title}
               </h3>
-              <p className="mt-1 text-sm font-medium text-muted">{step.body}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted">
+                {step.body}
+              </p>
             </div>
           </li>
         ))}
       </ol>
-      <DoodleArrow className="h-6 w-16 text-rust" />
     </div>
   );
 }
@@ -246,7 +232,7 @@ function ContactWindow() {
     const email = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
     const subject = encodeURIComponent(
-      `Project inquiry from ${name || "website"}`,
+      `Project from ${name || "website"}`,
     );
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`,
@@ -258,16 +244,14 @@ function ContactWindow() {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
+        <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
           {contact.heading}
         </h2>
-        <p className="mt-2 text-sm text-muted">{contact.body}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{contact.body}</p>
       </div>
-      <ul className="space-y-2 border-[3px] border-ink bg-paper p-3 text-sm nb-shadow">
+      <ul className="space-y-3 border-[3px] border-ink bg-paper p-3 text-sm">
         <li>
-          <span className="text-[10px] font-bold uppercase tracking-wide text-muted">
-            Email
-          </span>
+          <span className="text-xs text-muted">Email</span>
           <br />
           <a
             className="font-medium text-blue underline"
@@ -277,59 +261,45 @@ function ContactWindow() {
           </a>
         </li>
         <li>
-          <span className="text-[10px] font-bold uppercase tracking-wide text-muted">
-            Phone
-          </span>
-          <br />
-          <a
-            className="font-medium"
-            href={`tel:${contact.phone.replace(/\s/g, "")}`}
-          >
-            {contact.phone}
-          </a>
-        </li>
-        <li>
-          <span className="text-[10px] font-bold uppercase tracking-wide text-muted">
-            Location
-          </span>
+          <span className="text-xs text-muted">Based in</span>
           <br />
           <span className="font-medium">{contact.location}</span>
         </li>
       </ul>
       <form
         onSubmit={onSubmit}
-        className="space-y-3 border-[3px] border-ink bg-paper p-4 nb-shadow"
+        className="space-y-3 border-[3px] border-ink bg-paper p-4"
       >
         <input
           name="name"
           required
-          placeholder="NAME_"
-          className="min-h-11 w-full border-[3px] border-ink bg-cream px-3 text-sm font-bold outline-none focus:bg-mustard"
+          placeholder="Your name"
+          className="min-h-11 w-full border-[3px] border-ink bg-cream px-3 text-sm outline-none focus:bg-mustard"
         />
         <input
           name="email"
           type="email"
           required
-          placeholder="EMAIL_"
-          className="min-h-11 w-full border-[3px] border-ink bg-cream px-3 text-sm font-bold outline-none focus:bg-mustard"
+          placeholder="Email"
+          className="min-h-11 w-full border-[3px] border-ink bg-cream px-3 text-sm outline-none focus:bg-mustard"
         />
         <textarea
           name="message"
           required
           rows={4}
-          placeholder="MESSAGE_"
-          className="w-full border-[3px] border-ink bg-cream px-3 py-2 text-sm font-bold outline-none focus:bg-mustard"
+          placeholder="What are you trying to build?"
+          className="w-full border-[3px] border-ink bg-cream px-3 py-2 text-sm outline-none focus:bg-mustard"
         />
         <button
           type="submit"
           className="nb-btn min-h-11 w-full px-4 text-xs"
           style={{ background: "#0a0a0a", color: "#fff8e7" }}
         >
-          Send
+          Open email
         </button>
         {hint && (
           <p className="text-[11px] text-muted">
-            Opening mail… or write {contact.email}
+            If nothing opens, write us at {contact.email}
           </p>
         )}
       </form>
@@ -344,12 +314,10 @@ function WallpaperWindow() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-black md:text-2xl">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold md:text-2xl">
             Wallpaper
           </h2>
-          <p className="mt-1 text-xs font-bold uppercase tracking-wide text-muted">
-            Click a preview · or cycle next
-          </p>
+          <p className="mt-1 text-sm text-muted">Pick one, or hit next.</p>
         </div>
         <button
           type="button"
@@ -357,27 +325,25 @@ function WallpaperWindow() {
           disabled={wallpapers.length === 0}
           className="nb-btn px-4 py-2 text-xs disabled:opacity-40"
         >
-          Next wallpaper
+          Next
         </button>
       </div>
 
       {!ready && (
-        <p className="border-[3px] border-ink bg-paper p-4 text-sm font-bold">
-          Scanning /wallpapers…
+        <p className="border-[3px] border-ink bg-paper p-4 text-sm">
+          Loading wallpapers…
         </p>
       )}
 
       {ready && wallpapers.length === 0 && (
-        <div className="border-[3px] border-ink bg-mustard p-4 text-sm font-bold nb-shadow-sm">
-          <p>No wallpapers found.</p>
-          <p className="mt-2 text-xs font-medium normal-case tracking-normal">
-            Paste images into{" "}
-            <code className="border-2 border-ink bg-cream px-1">
+        <div className="border-[3px] border-ink bg-mustard p-4 text-sm">
+          <p>No wallpapers yet.</p>
+          <p className="mt-2 text-xs">
+            Drop images in{" "}
+            <code className="border border-ink bg-cream px-1">
               public/wallpapers/
             </code>{" "}
-            as <code className="border-2 border-ink bg-cream px-1">1.jpg</code>,{" "}
-            <code className="border-2 border-ink bg-cream px-1">2.png</code>, then
-            refresh.
+            and refresh.
           </p>
         </div>
       )}
@@ -392,7 +358,7 @@ function WallpaperWindow() {
                 key={path}
                 type="button"
                 onClick={() => setWallpaper(path)}
-                className={`overflow-hidden border-[3px] border-ink text-left nb-shadow-sm ${
+                className={`overflow-hidden border-[3px] border-ink text-left ${
                   active ? "bg-mustard" : "bg-paper hover:bg-cream"
                 }`}
               >
@@ -400,18 +366,13 @@ function WallpaperWindow() {
                   <PixelPhoto
                     src={path}
                     alt={label}
-                    pixelSize={3}
                     className="absolute inset-0 h-full w-full"
                   />
                 </div>
                 <div className="px-2 py-1.5">
-                  <p className="truncate text-[10px] font-black uppercase tracking-wide">
-                    {label}
-                  </p>
+                  <p className="truncate text-[11px]">{label}</p>
                   {active && (
-                    <p className="text-[9px] font-bold uppercase text-ink/70">
-                      Active
-                    </p>
+                    <p className="text-[10px] text-ink/70">Active</p>
                   )}
                 </div>
               </button>

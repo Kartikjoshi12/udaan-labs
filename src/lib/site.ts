@@ -1,8 +1,8 @@
 export const site = {
   name: "Udaan Labs",
-  tagline: "We build mobile apps and websites that actually ship.",
+  tagline: "Apps and websites for people who just want the thing built.",
   description:
-    "Udaan Labs is a product studio for startups and growing businesses. We design and build mobile apps and websites — from first idea to launch.",
+    "Udaan Labs is a small studio that designs and builds mobile apps and websites. Straight talk, clear scope, and we ship.",
   images: {
     aboutHero: "/projects/about-hero.jpg",
     team: "/projects/team.jpg",
@@ -10,97 +10,96 @@ export const site = {
   nav: [
     { label: "Services", href: "#services" },
     { label: "Why us", href: "#why-us" },
-    { label: "Process", href: "#process" },
-    { label: "Projects", href: "#projects" },
+    { label: "How we work", href: "#process" },
+    { label: "Work", href: "#projects" },
     { label: "Contact", href: "#contact" },
   ],
   hero: {
-    eyebrow: "Product studio",
-    title: "Apps and websites, built to launch.",
+    eyebrow: "India · remote-friendly",
+    title: "We build the app. We build the site. Then we hand it over.",
     subtitle:
-      "Udaan Labs helps you go from idea to a live product — clear scope, clean design, and shipping as the goal.",
-    primaryCta: { label: "View work", href: "#projects" },
-    secondaryCta: { label: "Contact us", href: "#contact" },
+      "Small team. No pitch decks for fun. Tell us what you need — we scope it, design it, and get it live.",
+    primaryCta: { label: "See work", href: "#projects" },
+    secondaryCta: { label: "Say hi", href: "#contact" },
   },
   services: [
     {
       title: "Mobile apps",
-      body: "iOS and Android products with solid UX, reliable backends, and store-ready delivery.",
+      body: "iOS and Android — from first screens to store upload. We care about how it feels in the hand, not just how the Figma looks.",
       image: "/projects/liftfit.jpg",
     },
     {
       title: "Websites",
-      body: "Marketing sites and web apps that load fast, look sharp, and convert visitors.",
+      body: "Marketing sites and light web apps that load fast and say what your product actually is.",
       image: "/projects/northline.jpg",
     },
     {
-      title: "MVP builds",
-      body: "Scoped first versions so you can validate the idea without overbuilding.",
+      title: "First versions",
+      body: "A tight MVP so you can show users something real without burning six months on features nobody asked for.",
       image: "/projects/harbor.jpg",
     },
   ],
-  // Placeholder stats — replace with real numbers when ready
-  stats: [
-    { value: "20+", label: "Projects shipped" },
-    { value: "10+", label: "Happy clients" },
-    { value: "3+", label: "Years building" },
-    { value: "2", label: "Platforms: web & mobile" },
+  facts: [
+    { label: "What we do", value: "Apps + web" },
+    { label: "How we work", value: "Small team" },
+    { label: "Where", value: "India · remote" },
+    { label: "Goal", value: "Ship, then iterate" },
   ],
   whyUs:
-    "We keep the process light and the communication clear. You get a small team that cares about shipping, not endless decks.",
+    "You talk to the people building it. We keep scope honest, push back when something is a waste of money, and prefer a live link over another slide.",
   process: [
     {
-      step: "01",
-      title: "Discovery",
-      body: "We learn your goals, users, and constraints, then agree on a focused scope.",
+      step: "1",
+      title: "Talk",
+      body: "What are you building, for whom, and what’s the smallest useful version?",
     },
     {
-      step: "02",
-      title: "Design",
-      body: "Wireframes and UI that match your brand and make the product easy to use.",
+      step: "2",
+      title: "Sketch",
+      body: "Rough screens and a clear list of what’s in / out. No surprise scope later.",
     },
     {
-      step: "03",
+      step: "3",
       title: "Build",
-      body: "Clean, maintainable code for apps and websites — reviewed as we go.",
+      body: "We send working builds as we go. You click around. We fix what’s weird.",
     },
     {
-      step: "04",
-      title: "Launch",
-      body: "QA, deployment, store or hosting setup, and a handoff you can run with.",
+      step: "4",
+      title: "Ship",
+      body: "Stores, hosting, handoff docs — then you’re running it, not stuck waiting on us.",
     },
   ],
   projects: [
     {
       title: "LiftFit",
-      type: "Mobile app",
+      type: "Mobile",
       blurb:
-        "Workout tracking app with simple plans and progress charts for busy professionals.",
-      tags: ["iOS", "Android", "Fitness"],
+        "Workout tracker for people who don’t want a social network bolted onto every set. Plans, logs, simple charts.",
+      tags: ["iOS", "Android"],
       image: "/projects/liftfit.jpg",
     },
     {
-      title: "Northline Commerce",
+      title: "Northline",
       type: "Website",
       blurb:
-        "Brand site and catalog for a D2C retailer — fast pages and clear product stories.",
-      tags: ["Next.js", "E‑commerce", "SEO"],
+        "Brand site + catalog for a D2C shop. Fast pages, clear product stories, less fluff.",
+      tags: ["Next.js", "Commerce"],
       image: "/projects/northline.jpg",
     },
     {
       title: "Harbor Desk",
       type: "Web app",
       blurb:
-        "Internal ops dashboard for a logistics team: orders, status, and daily metrics.",
-      tags: ["Dashboard", "SaaS", "Ops"],
+        "Ops dashboard for a logistics crew — orders, status, daily numbers. Built for people on a warehouse floor, not a demo stage.",
+      tags: ["Dashboard", "Ops"],
       image: "/projects/harbor.jpg",
     },
   ],
   contact: {
-    heading: "Tell us what you want to build",
-    body: "Share a short note about your app or website. We’ll reply with next steps.",
+    heading: "Got something to build?",
+    body: "Send a short note — what it is, rough timeline, and any links. We’ll reply with whether we’re a fit and what next looks like.",
     email: "hello@udaanlabs.com",
-    phone: "+91 90000 00000",
-    location: "Remote · worldwide",
+    phone: "",
+    location: "India · happy to work remote",
   },
 } as const;

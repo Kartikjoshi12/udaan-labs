@@ -3,7 +3,6 @@
 import { site } from "@/lib/site";
 import { apps, dockApps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
-import { DoodleStar } from "./Doodles";
 
 type MobileHomeProps = {
   clock: string;
@@ -15,21 +14,16 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
 
   return (
     <div className="relative z-[1] flex h-full flex-col text-ink">
-      <div className="flex items-center justify-between border-b-[3px] border-ink bg-mustard px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] text-[12px] font-black">
+      <div className="flex items-center justify-between border-b-[3px] border-ink bg-mustard px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] text-[12px]">
         <span className="tabular-nums">{clock || "09:41"}</span>
-        <span className="uppercase tracking-wider">Brutal</span>
-        <span className="text-[10px]">▮▮▮</span>
+        <span className="font-semibold">{site.name}</span>
+        <span className="text-[10px] text-ink/60">▮▮▮</span>
       </div>
 
-      <div className="relative z-[2] px-5 pt-5">
-        <div className="flex items-center gap-2">
-          <p className="text-[10px] font-black uppercase tracking-[0.2em]">
-            {site.name}
-          </p>
-          <DoodleStar className="h-5 w-5" />
-        </div>
-        <h1 className="mt-1 font-[family-name:var(--font-space-grotesk)] text-3xl font-black uppercase">
-          Home
+      <div className="relative z-[2] px-5 pt-6">
+        <p className="text-xs text-muted">{site.hero.eyebrow}</p>
+        <h1 className="mt-1 font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight">
+          {site.tagline}
         </h1>
       </div>
 
@@ -47,7 +41,7 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
             >
               <IconArt id={app.id} size={32} />
             </span>
-            <span className="max-w-[4.5rem] truncate border-[3px] border-ink bg-cream px-1 text-[9px] font-black uppercase">
+            <span className="max-w-[4.5rem] truncate border-2 border-ink bg-cream px-1 text-[10px]">
               {app.label}
             </span>
           </button>

@@ -340,12 +340,10 @@ export function Window({
             <Checkbox width={16} height={16} className="pixel-icon" />
           </button>
         </div>
-        <p className="pointer-events-none flex-1 truncate text-center text-xs font-black uppercase tracking-[0.12em] text-ink">
+        <p className="pointer-events-none flex-1 truncate text-center text-sm font-semibold text-ink">
           {title}
         </p>
-        <span className="border-[3px] border-ink bg-cream px-1.5 py-0.5 text-[9px] font-black">
-          WIN
-        </span>
+        <span className="w-8" aria-hidden />
       </div>
 
       <div className="h-[calc(100%-2.75rem)] overflow-y-auto overscroll-contain bg-cream p-4 md:p-5">

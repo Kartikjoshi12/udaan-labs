@@ -16,7 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — Retro Desktop`,
+  title: `${site.name} — apps & websites`,
   description: site.description,
 };
 
