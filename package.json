@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dist": "next build && node scripts/make-dist.mjs",
     "start": "next start",
     "lint": "eslint"
   },

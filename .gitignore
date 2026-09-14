@@ -19,6 +19,7 @@
 
 # production
 /build
+# dist/ is committed (static export for hosting)
 
 # misc
 .DS_Store
