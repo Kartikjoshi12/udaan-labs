@@ -23,7 +23,8 @@ const defaultPositions: Record<AppId, Pos> = {
   projects: { x: 28, y: 272 },
   process: { x: 140, y: 64 },
   contact: { x: 140, y: 168 },
-  tictactoe: { x: 140, y: 272 },
+  wallpaper: { x: 140, y: 272 },
+  tictactoe: { x: 140, y: 376 },
 };
 
 const DRAG_THRESHOLD = 6;

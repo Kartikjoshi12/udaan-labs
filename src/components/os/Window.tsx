@@ -223,37 +223,38 @@ export function Window({
     document.body.style.userSelect = "none";
   };
 
-  const onResizePointerDown =
-    (edge: Edge) => (e: ReactPointerEvent<HTMLDivElement>) => {
-      if (e.button !== 0) return;
-      if (maximized) return;
-      e.stopPropagation();
-      e.preventDefault();
-      onFocus();
-      resizeSession.current = {
-        pointerId: e.pointerId,
-        edge,
-        startMouseX: e.clientX,
-        startMouseY: e.clientY,
-        originX: posRef.current.x,
-        originY: posRef.current.y,
-        originW: sizeRef.current.w,
-        originH: sizeRef.current.h,
-      };
-      setResizing(true);
-      document.body.style.userSelect = "none";
-      const cursors: Record<Edge, string> = {
-        n: "ns-resize",
-        s: "ns-resize",
-        e: "ew-resize",
-        w: "ew-resize",
-        ne: "nesw-resize",
-        nw: "nwse-resize",
-        se: "nwse-resize",
-        sw: "nesw-resize",
-      };
-      document.body.style.cursor = cursors[edge];
+  const onResizePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    if (maximized) return;
+    const edge = e.currentTarget.getAttribute("data-edge") as Edge | null;
+    if (!edge) return;
+    e.stopPropagation();
+    e.preventDefault();
+    onFocus();
+    resizeSession.current = {
+      pointerId: e.pointerId,
+      edge,
+      startMouseX: e.clientX,
+      startMouseY: e.clientY,
+      originX: posRef.current.x,
+      originY: posRef.current.y,
+      originW: sizeRef.current.w,
+      originH: sizeRef.current.h,
     };
+    setResizing(true);
+    document.body.style.userSelect = "none";
+    const cursors: Record<Edge, string> = {
+      n: "ns-resize",
+      s: "ns-resize",
+      e: "ew-resize",
+      w: "ew-resize",
+      ne: "nesw-resize",
+      nw: "nwse-resize",
+      se: "nwse-resize",
+      sw: "nesw-resize",
+    };
+    document.body.style.cursor = cursors[edge];
+  };
 
   const handleClass = "absolute z-20 bg-transparent touch-none";
 
@@ -362,42 +363,50 @@ export function Window({
         <>
           <div
             data-resize
-            onPointerDown={onResizePointerDown("n")}
+            data-edge="n"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} left-3 right-3 top-0 h-2 cursor-ns-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("s")}
+            data-edge="s"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} bottom-0 left-3 right-3 h-2 cursor-ns-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("e")}
+            data-edge="e"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} right-0 top-3 bottom-3 w-2 cursor-ew-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("w")}
+            data-edge="w"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} left-0 top-3 bottom-3 w-2 cursor-ew-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("ne")}
+            data-edge="ne"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} right-0 top-0 h-4 w-4 cursor-nesw-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("nw")}
+            data-edge="nw"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} left-0 top-0 h-4 w-4 cursor-nwse-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("sw")}
+            data-edge="sw"
+            onPointerDown={onResizePointerDown}
             className={`${handleClass} bottom-0 left-0 h-4 w-4 cursor-nesw-resize`}
           />
           <div
             data-resize
-            onPointerDown={onResizePointerDown("se")}
+            data-edge="se"
+            onPointerDown={onResizePointerDown}
             className="absolute bottom-0 right-0 z-30 flex h-4 w-4 cursor-nwse-resize items-end justify-end border-l-2 border-t-2 border-ink bg-titlebar touch-none"
             title="Drag to resize"
             aria-label="Resize window"

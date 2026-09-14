@@ -15,6 +15,7 @@ const icons = {
   projects: Laptop,
   process: Reload,
   contact: Mail,
+  wallpaper: ImageIcon,
   tictactoe: Gamepad,
 } as const;
 

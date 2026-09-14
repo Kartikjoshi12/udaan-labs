@@ -7,6 +7,7 @@ import { DesktopIcons } from "./DesktopIcons";
 import { MobileApp } from "./MobileApp";
 import { MobileHome } from "./MobileHome";
 import { Taskbar } from "./Taskbar";
+import { WallpaperBg } from "./WallpaperBg";
 import { Window } from "./Window";
 import { WindowContent } from "./WindowContent";
 
@@ -16,6 +17,7 @@ const titles: Record<AppId, string> = {
   projects: "Selected Work",
   process: "How We Work",
   contact: "Start a Project",
+  wallpaper: "Studio Backgrounds",
   tictactoe: "Tic Tac Toe",
 };
 
@@ -26,6 +28,7 @@ const startPos: Record<AppId, { x: number; y: number }> = {
   services: { x: 320, y: 56 },
   process: { x: 340, y: 60 },
   contact: { x: 310, y: 52 },
+  wallpaper: { x: 330, y: 58 },
   tictactoe: { x: 420, y: 64 },
 };
 
@@ -36,6 +39,7 @@ const startSize: Record<AppId, { w: number; h: number }> = {
   services: { w: 820, h: 520 },
   process: { w: 780, h: 520 },
   contact: { w: 780, h: 520 },
+  wallpaper: { w: 720, h: 480 },
   tictactoe: { w: 420, h: 520 },
 };
 
@@ -145,16 +149,34 @@ export function Desktop() {
           </div>
         </div>
 
+        <WallpaperBg />
         <DesktopIcons onOpen={openApp} />
+
+        {/* Studio Drafting Desk Watermark / Backdrop Marks */}
+        <div className="pointer-events-none absolute right-8 top-16 z-10 hidden xl:block font-mono text-[11px] text-muted/60 select-none">
+          <div className="border border-ink/20 bg-cream/70 p-4 nb-shadow-sm max-w-[280px] backdrop-blur-[2px]">
+            <div className="flex items-center justify-between border-b border-ink/20 pb-1.5 mb-2">
+              <span className="font-bold text-ink text-[10px] tracking-wider">UDAAN LAB STATUS</span>
+              <span className="text-[9px] text-green font-bold flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-green" /> ACTIVE
+              </span>
+            </div>
+            <div className="space-y-1 text-[10px] text-muted">
+              <p>PROD_CYCLE: 2026</p>
+              <p>DISPATCH: FAST-TRACK</p>
+              <p className="text-faint">DIGITAL WORKSHOP × EDITORIAL UI</p>
+            </div>
+          </div>
+        </div>
 
         {openApps.length === 0 && (
           <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
-            <div className="border-2 border-ink bg-cream px-5 py-3 text-center text-sm nb-shadow">
-              <p className="font-mono font-bold text-xs uppercase tracking-wider text-faint mb-1">
-                Workspace Idle
+            <div className="border-2 border-ink bg-cream px-6 py-4 text-center text-sm nb-shadow max-w-md">
+              <p className="font-mono font-bold text-xs uppercase tracking-wider text-orange mb-1">
+                UDAAN LABS // WORKSPACE READY
               </p>
-              <p className="text-xs text-muted">
-                Click any desktop icon or use the studio launcher below to inspect our work.
+              <p className="text-xs text-muted leading-relaxed">
+                Click any desktop tool on the left or use the launcher in the bottom taskbar to explore studio artifacts.
               </p>
             </div>
           </div>
@@ -202,7 +224,8 @@ export function Desktop() {
                   ["services", "Capabilities", "03"],
                   ["process", "Development Method", "04"],
                   ["contact", "Contact & Dispatch", "05"],
-                  ["tictactoe", "Workshop Mini-Game", "06"],
+                  ["wallpaper", "Studio Backgrounds", "06"],
+                  ["tictactoe", "Workshop Mini-Game", "07"],
                 ] as const
               ).map(([id, label, num]) => (
                 <li key={id}>

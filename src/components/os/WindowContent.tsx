@@ -5,7 +5,8 @@ import { site } from "@/lib/site";
 import type { AppId } from "./apps";
 import { PixelPhoto } from "./PixelPhoto";
 import { TicTacToe } from "./TicTacToe";
-import { Check, ArrowRight } from "pixelarticons/react";
+import { WallpaperWindow } from "./WallpaperWindow";
+import { Check, ArrowRight, Laptop, Smartphone, Server, Zap } from "pixelarticons/react";
 
 export function WindowContent({ id }: { id: AppId }) {
   switch (id) {
@@ -19,6 +20,8 @@ export function WindowContent({ id }: { id: AppId }) {
       return <ProcessWindow />;
     case "contact":
       return <ContactWindow />;
+    case "wallpaper":
+      return <WallpaperWindow />;
     case "tictactoe":
       return <TicTacToe />;
   }
@@ -73,20 +76,113 @@ function WindowHeader({
 function AboutWindow() {
   return (
     <div className="space-y-6">
-      <WindowHeader
-        code="[01]"
-        title="Udaan Labs"
-        subtitle="Independent digital product studio based in India · Working with clients worldwide."
-      />
+      {/* Studio Header bar with technical annotations */}
+      <div className="border-b-2 border-ink pb-3 mb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-xs font-bold text-orange">[01_SYS]</span>
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-2xl md:text-3xl font-bold tracking-tight text-ink">
+            Udaan Labs
+          </h2>
+          <span className="border border-ink bg-green-soft px-2 py-0.5 font-mono text-[9px] font-bold text-green">
+            ● PRODUCTION READY
+          </span>
+        </div>
+        <p className="font-mono text-xs text-muted max-w-sm sm:text-right">
+          Independent digital workshop · India / Remote
+        </p>
+      </div>
 
-      {/* Hero Statement Block */}
-      <div className="border-2 border-ink bg-paper p-6 nb-shadow">
-        <p className="font-[family-name:var(--font-space-grotesk)] text-2xl sm:text-3xl font-bold leading-tight tracking-tight text-ink">
-          We build the app. We build the site. Then we hand it over.
-        </p>
-        <p className="mt-3 text-sm sm:text-base leading-relaxed text-muted">
-          Small team. No pitch decks for fun. Tell us what you need — we scope it, design it, and get it live.
-        </p>
+      {/* DISTINCTIVE EDITORIAL HERO BLOCK */}
+      <div className="border-2 border-ink bg-paper p-5 sm:p-7 nb-shadow relative overflow-hidden">
+        {/* Subtle retro top line */}
+        <div className="flex items-center justify-between border-b border-ink/20 pb-3 mb-5 font-mono text-xs text-muted">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-ink">UL_</span>
+            <span className="text-faint">/</span>
+            <span className="text-[11px]">STUDIO WORKSPACE</span>
+          </div>
+          <div className="flex items-center gap-3 text-[11px]">
+            <span className="hidden sm:inline-block text-faint">BUILD: ACTIVE</span>
+            <span className="border border-ink bg-cream px-1.5 py-0.5 font-mono text-[10px]">
+              2026_EDITION
+            </span>
+          </div>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-12 items-center">
+          {/* Main Editorial Statement */}
+          <div className="lg:col-span-7 space-y-4">
+            <div className="inline-flex items-center gap-2 border border-ink bg-yellow px-2.5 py-1 font-mono text-[10px] font-bold text-ink shadow-[1px_1px_0_0_#111111]">
+              <span>CORE DISPATCH</span>
+              <span>//</span>
+              <span>DIRECT EXECUTION</span>
+            </div>
+
+            <h1 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-ink uppercase">
+              Apps + websites for people who just want the thing built.
+            </h1>
+
+            <p className="text-sm sm:text-base leading-relaxed text-muted max-w-xl">
+              Small team. No pitch decks for fun. Tell us what you need — we scope it, design it, and get it live.
+            </p>
+
+            <div className="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
+              <a
+                href="#projects"
+                className="nb-btn nb-btn-primary px-4 py-2 text-xs flex items-center gap-2"
+              >
+                <span>[ OPEN WORKSPACE ]</span>
+                <ArrowRight width={14} height={14} className="pixel-icon" />
+              </a>
+              <span className="text-faint text-[11px]">or click any desktop tool</span>
+            </div>
+          </div>
+
+          {/* Small Retro Computer / Lab Status Element (10-15% pixel art) */}
+          <div className="lg:col-span-5">
+            <div className="border-2 border-ink bg-cream p-4 nb-shadow relative">
+              <div className="flex items-center justify-between border-b-2 border-ink pb-2 mb-3">
+                <div className="flex items-center gap-2 font-mono text-xs font-bold text-ink">
+                  <Laptop width={16} height={16} className="pixel-icon text-orange" />
+                  <span>UDAAN.EXE</span>
+                </div>
+                <span className="inline-flex items-center gap-1 font-mono text-[10px] text-green font-bold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
+                  ONLINE
+                </span>
+              </div>
+
+              <div className="space-y-3 font-mono text-xs">
+                <div>
+                  <div className="flex items-center justify-between text-[11px] text-muted mb-1">
+                    <span>CURRENT BUILD</span>
+                    <span className="font-bold text-ink">78% READY</span>
+                  </div>
+                  {/* Retro progress bar */}
+                  <div className="h-4 w-full border border-ink bg-paper p-0.5">
+                    <div className="h-full bg-orange" style={{ width: "78%" }} />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-ink/15 text-[11px]">
+                  <div className="border border-ink/30 bg-paper p-2">
+                    <span className="text-[9px] text-faint block uppercase">SHIPPED THIS YEAR</span>
+                    <span className="text-sm font-bold text-ink">07 BUILDS</span>
+                  </div>
+                  <div className="border border-ink/30 bg-paper p-2">
+                    <span className="text-[9px] text-faint block uppercase">DISPATCH LOCATION</span>
+                    <span className="text-sm font-bold text-ink">INDIA / REMOTE</span>
+                  </div>
+                </div>
+
+                <div className="border border-ink/20 bg-yellow-soft p-2 text-[10px] text-muted flex items-center gap-2">
+                  <Zap width={12} height={12} className="pixel-icon text-orange shrink-0" />
+                  <span>Active sprint: Q3 client deployments & MVP handoffs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Asymmetric Studio Info & Photo */}
@@ -94,7 +190,7 @@ function AboutWindow() {
         <div className="md:col-span-7 flex flex-col justify-between border-2 border-ink bg-cream p-5">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-wider text-faint mb-3">
-              AT A GLANCE
+              STUDIO ARCHITECTURE & FACTS
             </p>
             <div className="grid grid-cols-2 gap-3">
               {site.facts.map((fact) => (
@@ -138,7 +234,7 @@ function AboutWindow() {
         <p className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-ink">
           {site.tagline}
         </p>
-        <span className="font-mono text-[10px] text-ink/80 shrink-0 uppercase tracking-wider">
+        <span className="font-mono text-[10px] text-ink/80 shrink-0 uppercase tracking-wider font-semibold">
           FAST ITERATIONS · HONEST SCOPE
         </span>
       </div>
@@ -218,92 +314,112 @@ function ProjectsWindow() {
         subtitle="Real production software engineered for high utility, reliability, and speed."
       />
 
-      <div className="space-y-6">
-        {site.projects.map((project, idx) => (
-          <article
-            key={project.title}
-            className="border-2 border-ink bg-paper p-5 nb-shadow transition-transform hover:-translate-y-0.5"
-          >
-            {/* Technical Spec Metadata Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/20 pb-2.5 mb-4 font-mono text-xs">
-              <div className="flex items-center gap-2.5">
-                <span className="font-bold text-orange tracking-wider">
-                  {project.id}
-                </span>
-                <span className="text-faint">/</span>
-                <span className="font-semibold text-ink">{project.type}</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="border border-ink/40 bg-cream px-2 py-0.5 font-mono text-[10px]">
-                  {project.year}
-                </span>
-                <span className="border border-ink bg-yellow px-2 py-0.5 font-mono text-[10px] font-bold text-ink">
-                  {project.status}
-                </span>
-              </div>
-            </div>
-
-            {/* Asymmetric Artifact Layout */}
-            <div className="grid gap-5 items-stretch md:grid-cols-12">
-              <div className="md:col-span-7 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold tracking-tight text-ink">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="mt-1 font-mono text-xs text-muted">
-                    Stack: {project.stack}
-                  </p>
-
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {project.blurb}
-                  </p>
+      <div className="space-y-7">
+        {site.projects.map((project, idx) => {
+          const isAlt = idx % 2 === 1;
+          return (
+            <article
+              key={project.title}
+              className="border-2 border-ink bg-paper p-5 sm:p-6 nb-shadow transition-transform hover:-translate-y-0.5"
+            >
+              {/* Lab Artifact Header Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-ink pb-3 mb-4 font-mono text-xs">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex items-center gap-1.5 border border-ink bg-ink text-cream px-2 py-0.5 font-bold tracking-wider text-[11px]">
+                    {project.type.includes("Mobile") ? (
+                      <Smartphone width={12} height={12} className="pixel-icon text-yellow" />
+                    ) : project.type.includes("Ops") ? (
+                      <Server width={12} height={12} className="pixel-icon text-yellow" />
+                    ) : (
+                      <Laptop width={12} height={12} className="pixel-icon text-yellow" />
+                    )}
+                    {project.id}
+                  </span>
+                  <span className="text-faint">/</span>
+                  <span className="font-bold text-ink uppercase tracking-wide">
+                    {project.type}
+                  </span>
                 </div>
 
-                <div className="mt-4 space-y-3">
-                  <div className="border border-ink/30 bg-cream p-2.5 font-mono text-[11px] text-ink flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 bg-green rounded-full shrink-0" />
-                    <span>{project.metrics}</span>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="border border-ink/40 bg-cream px-2 py-0.5 font-mono text-[10px] text-muted"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex items-center gap-2">
+                  <span className="border border-ink bg-cream px-2 py-0.5 font-mono text-[10px] text-muted">
+                    YEAR: {project.year}
+                  </span>
+                  <span className="border border-ink bg-yellow px-2 py-0.5 font-mono text-[10px] font-bold text-ink flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green" />
+                    {project.status}
+                  </span>
                 </div>
               </div>
 
-              <div className="md:col-span-5 flex flex-col justify-between">
-                <FrameImage
-                  src={project.image}
-                  alt={`${project.title} interface visual`}
-                  className="h-48 md:h-full min-h-[170px] w-full"
-                />
-              </div>
-            </div>
+              {/* Asymmetric Artifact Layout (Alternating Composition) */}
+              <div className={`grid gap-6 items-stretch md:grid-cols-12 ${isAlt ? "md:flex-row-reverse" : ""}`}>
+                <div className={`${isAlt ? "md:order-2" : "md:order-1"} md:col-span-7 flex flex-col justify-between`}>
+                  <div>
+                    <h3 className="font-[family-name:var(--font-space-grotesk)] text-2xl sm:text-3xl font-bold tracking-tight text-ink uppercase">
+                      {project.title}
+                    </h3>
+                    
+                    <div className="mt-1.5 inline-block border border-ink/40 bg-cream px-2 py-0.5 font-mono text-xs font-semibold text-orange">
+                      TECH_SPEC: {project.stack}
+                    </div>
 
-            {/* Footer action bar */}
-            <div className="mt-4 pt-3 border-t border-ink/10 flex items-center justify-between font-mono text-xs">
-              <span className="text-faint text-[10px]">
-                PRODUCTION HANDOFF COMPLETE
-              </span>
-              <a
-                href="#contact"
-                className="nb-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs hover:bg-cream"
-              >
-                <span>BUILD SOMETHING SIMILAR</span>
-                <ArrowRight width={12} height={12} className="pixel-icon" />
-              </a>
-            </div>
-          </article>
-        ))}
+                    <p className="mt-3 text-sm sm:text-base leading-relaxed text-muted">
+                      {project.blurb}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 space-y-3">
+                    <div className="border-2 border-ink bg-cream p-3 font-mono text-xs text-ink flex items-center gap-2.5 shadow-[2px_2px_0_0_#111111]">
+                      <span className="h-2 w-2 bg-green rounded-full shrink-0" />
+                      <span className="font-medium">{project.metrics}</span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="border border-ink bg-paper px-2 py-0.5 font-mono text-[10px] text-muted"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`${isAlt ? "md:order-1" : "md:order-2"} md:col-span-5 flex flex-col justify-between`}>
+                  <div className="border-2 border-ink bg-paper-2 p-1.5">
+                    <FrameImage
+                      src={project.image}
+                      alt={`${project.title} lab artifact visual`}
+                      className="h-52 md:h-full min-h-[190px] w-full"
+                    />
+                  </div>
+                  <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-faint px-1">
+                    <span>ARTIFACT_VIEW</span>
+                    <span>VERIFIED LIVE</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer action bar */}
+              <div className="mt-5 pt-3 border-t-2 border-ink/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
+                <span className="text-faint text-[10px] flex items-center gap-1.5">
+                  <Check width={12} height={12} className="pixel-icon text-green" />
+                  PRODUCTION HANDOFF COMPLETE · SOURCE CODE DELIVERED
+                </span>
+                <a
+                  href="#contact"
+                  className="nb-btn inline-flex items-center justify-center gap-2 px-3.5 py-1.5 text-xs hover:bg-yellow transition-colors"
+                >
+                  <span>[ OPEN PROJECT BRIEF ]</span>
+                  <ArrowRight width={12} height={12} className="pixel-icon" />
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

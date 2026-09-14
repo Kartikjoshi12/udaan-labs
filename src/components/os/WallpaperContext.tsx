@@ -24,11 +24,11 @@ const WallpaperContext = createContext<WallpaperContextValue | null>(null);
 function readSaved(): string | null {
   try {
     const saved = window.localStorage.getItem(WALLPAPER_STORAGE_KEY);
-    if (saved && (wallpapers as readonly string[]).includes(saved)) return saved;
+    if (saved !== null) return saved;
   } catch {
     /* ignore */
   }
-  return wallpapers[0] ?? null;
+  return "";
 }
 
 export function WallpaperProvider({ children }: { children: ReactNode }) {

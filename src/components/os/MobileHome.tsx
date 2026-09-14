@@ -22,14 +22,20 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
         </span>
       </div>
 
-      <div className="relative z-[2] px-5 pt-6">
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className="annotation-tag bg-yellow text-[9px]">STUDIO WORKSPACE</span>
-          <p className="font-mono text-[10px] text-faint">{site.hero.eyebrow}</p>
+      <div className="relative z-[2] px-5 pt-5">
+        <div className="flex items-center justify-between gap-2 mb-2 font-mono text-[10px]">
+          <span className="annotation-tag bg-yellow text-[9px] font-bold">UL_ // 2026</span>
+          <span className="text-green font-bold flex items-center gap-1 border border-ink bg-cream px-2 py-0.5 shadow-[1px_1px_0_0_#111111]">
+            <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
+            BUILD: 78% ACTIVE
+          </span>
         </div>
-        <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-snug tracking-tight">
+        <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight tracking-tight uppercase text-ink">
           {site.tagline}
         </h1>
+        <p className="mt-2 font-mono text-[11px] text-muted">
+          Independent digital workshop · Tap any tool below to inspect work.
+        </p>
       </div>
 
       <div className="relative z-[2] mx-auto mt-6 grid w-full max-w-sm grid-cols-4 gap-x-3 gap-y-5 px-4">
