@@ -8,16 +8,22 @@ import { TicTacToe } from "./TicTacToe";
 import { WallpaperWindow } from "./WallpaperWindow";
 import { Check, ArrowRight, Laptop, Smartphone, Server, Zap } from "pixelarticons/react";
 
-export function WindowContent({ id }: { id: AppId }) {
+export function WindowContent({
+  id,
+  onOpen,
+}: {
+  id: AppId;
+  onOpen?: (id: AppId) => void;
+}) {
   switch (id) {
     case "about":
-      return <AboutWindow />;
+      return <AboutWindow onOpen={onOpen} />;
     case "services":
-      return <ServicesWindow />;
+      return <ServicesWindow onOpen={onOpen} />;
     case "projects":
-      return <ProjectsWindow />;
+      return <ProjectsWindow onOpen={onOpen} />;
     case "process":
-      return <ProcessWindow />;
+      return <ProcessWindow onOpen={onOpen} />;
     case "contact":
       return <ContactWindow />;
     case "wallpaper":
@@ -73,13 +79,12 @@ function WindowHeader({
   );
 }
 
-function AboutWindow() {
+function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
     <div className="space-y-6">
-      {/* Studio Header bar with technical annotations */}
+      {/* Studio Header bar */}
       <div className="border-b-2 border-ink pb-3 mb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-xs font-bold text-orange">[01_SYS]</span>
           <h2 className="font-[family-name:var(--font-space-grotesk)] text-2xl md:text-3xl font-bold tracking-tight text-ink">
             Udaan Labs
           </h2>
@@ -94,7 +99,7 @@ function AboutWindow() {
 
       {/* DISTINCTIVE EDITORIAL HERO BLOCK */}
       <div className="border-2 border-ink bg-paper p-5 sm:p-7 nb-shadow relative overflow-hidden">
-        {/* Subtle retro top line */}
+        {/* Clean top line */}
         <div className="flex items-center justify-between border-b border-ink/20 pb-3 mb-5 font-mono text-xs text-muted">
           <div className="flex items-center gap-2">
             <span className="font-bold text-ink">UL_</span>
@@ -102,9 +107,8 @@ function AboutWindow() {
             <span className="text-[11px]">STUDIO WORKSPACE</span>
           </div>
           <div className="flex items-center gap-3 text-[11px]">
-            <span className="hidden sm:inline-block text-faint">BUILD: ACTIVE</span>
             <span className="border border-ink bg-cream px-1.5 py-0.5 font-mono text-[10px]">
-              2026_EDITION
+              EST. 2025
             </span>
           </div>
         </div>
@@ -112,12 +116,6 @@ function AboutWindow() {
         <div className="grid gap-6 lg:grid-cols-12 items-center">
           {/* Main Editorial Statement */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="inline-flex items-center gap-2 border border-ink bg-yellow px-2.5 py-1 font-mono text-[10px] font-bold text-ink shadow-[1px_1px_0_0_#111111]">
-              <span>CORE DISPATCH</span>
-              <span>//</span>
-              <span>DIRECT EXECUTION</span>
-            </div>
-
             <h1 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-ink uppercase">
               Apps + websites for people who just want the thing built.
             </h1>
@@ -127,14 +125,21 @@ function AboutWindow() {
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
-              <a
-                href="#projects"
+              <button
+                type="button"
+                onClick={() => onOpen?.("projects")}
                 className="nb-btn nb-btn-primary px-4 py-2 text-xs flex items-center gap-2"
               >
-                <span>[ OPEN WORKSPACE ]</span>
+                <span>EXPLORE WORK</span>
                 <ArrowRight width={14} height={14} className="pixel-icon" />
-              </a>
-              <span className="text-faint text-[11px]">or click any desktop tool</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onOpen?.("contact")}
+                className="nb-btn px-3.5 py-2 text-xs hover:bg-yellow transition-colors"
+              >
+                <span>START A PROJECT</span>
+              </button>
             </div>
           </div>
 
@@ -153,31 +158,32 @@ function AboutWindow() {
               </div>
 
               <div className="space-y-3 font-mono text-xs">
-                <div>
-                  <div className="flex items-center justify-between text-[11px] text-muted mb-1">
-                    <span>CURRENT BUILD</span>
-                    <span className="font-bold text-ink">78% READY</span>
+                <div className="border border-ink/30 bg-paper p-2.5">
+                  <div className="flex items-center justify-between text-[11px] mb-1">
+                    <span className="text-faint uppercase text-[9px]">CAPACITY</span>
+                    <span className="font-bold text-green flex items-center gap-1">
+                      <span className="h-1.5 w-1.5 rounded-full bg-green" /> ACCEPTING CLIENTS
+                    </span>
                   </div>
-                  {/* Retro progress bar */}
-                  <div className="h-4 w-full border border-ink bg-paper p-0.5">
-                    <div className="h-full bg-orange" style={{ width: "78%" }} />
-                  </div>
+                  <p className="text-[11px] text-muted leading-snug">
+                    Booking project sprints for web apps, mobile products, and MVP launches.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 pt-1 border-t border-ink/15 text-[11px]">
                   <div className="border border-ink/30 bg-paper p-2">
-                    <span className="text-[9px] text-faint block uppercase">SHIPPED THIS YEAR</span>
-                    <span className="text-sm font-bold text-ink">07 BUILDS</span>
+                    <span className="text-[9px] text-faint block uppercase">TIMELINE</span>
+                    <span className="text-xs font-bold text-ink">2 – 6 WEEKS</span>
                   </div>
                   <div className="border border-ink/30 bg-paper p-2">
-                    <span className="text-[9px] text-faint block uppercase">DISPATCH LOCATION</span>
-                    <span className="text-sm font-bold text-ink">INDIA / REMOTE</span>
+                    <span className="text-[9px] text-faint block uppercase">LOCATION</span>
+                    <span className="text-xs font-bold text-ink">INDIA / REMOTE</span>
                   </div>
                 </div>
 
                 <div className="border border-ink/20 bg-yellow-soft p-2 text-[10px] text-muted flex items-center gap-2">
                   <Zap width={12} height={12} className="pixel-icon text-orange shrink-0" />
-                  <span>Active sprint: Q3 client deployments & MVP handoffs</span>
+                  <span>Direct engineer communication · Weekly demo builds</span>
                 </div>
               </div>
             </div>
@@ -189,9 +195,6 @@ function AboutWindow() {
       <div className="grid gap-5 md:grid-cols-12 items-stretch">
         <div className="md:col-span-7 flex flex-col justify-between border-2 border-ink bg-cream p-5">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-wider text-faint mb-3">
-              STUDIO ARCHITECTURE & FACTS
-            </p>
             <div className="grid grid-cols-2 gap-3">
               {site.facts.map((fact) => (
                 <div
@@ -242,7 +245,7 @@ function AboutWindow() {
   );
 }
 
-function ServicesWindow() {
+function ServicesWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
     <div className="space-y-6">
       <WindowHeader
@@ -257,7 +260,7 @@ function ServicesWindow() {
             key={service.title}
             className="border-2 border-ink bg-cream p-5 nb-shadow relative"
           >
-            {/* Spec Header */}
+            {/* Header */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/20 pb-2.5 mb-3">
               <div className="flex items-baseline gap-2.5">
                 <span className="font-mono text-xs font-bold text-orange">
@@ -267,9 +270,6 @@ function ServicesWindow() {
                   {service.title}
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
-                DEPLOYMENT TRACK
-              </span>
             </div>
 
             <div className="grid sm:grid-cols-12 gap-5 items-center">
@@ -305,7 +305,7 @@ function ServicesWindow() {
   );
 }
 
-function ProjectsWindow() {
+function ProjectsWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
     <div className="space-y-6">
       <WindowHeader
@@ -322,7 +322,7 @@ function ProjectsWindow() {
               key={project.title}
               className="border-2 border-ink bg-paper p-5 sm:p-6 nb-shadow transition-transform hover:-translate-y-0.5"
             >
-              {/* Lab Artifact Header Bar */}
+              {/* Project Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-ink pb-3 mb-4 font-mono text-xs">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center gap-1.5 border border-ink bg-ink text-cream px-2 py-0.5 font-bold tracking-wider text-[11px]">
@@ -343,7 +343,7 @@ function ProjectsWindow() {
 
                 <div className="flex items-center gap-2">
                   <span className="border border-ink bg-cream px-2 py-0.5 font-mono text-[10px] text-muted">
-                    YEAR: {project.year}
+                    {project.year}
                   </span>
                   <span className="border border-ink bg-yellow px-2 py-0.5 font-mono text-[10px] font-bold text-ink flex items-center gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-green" />
@@ -352,7 +352,7 @@ function ProjectsWindow() {
                 </div>
               </div>
 
-              {/* Asymmetric Artifact Layout (Alternating Composition) */}
+              {/* Asymmetric Artifact Layout */}
               <div className={`grid gap-6 items-stretch md:grid-cols-12 ${isAlt ? "md:flex-row-reverse" : ""}`}>
                 <div className={`${isAlt ? "md:order-2" : "md:order-1"} md:col-span-7 flex flex-col justify-between`}>
                   <div>
@@ -361,7 +361,7 @@ function ProjectsWindow() {
                     </h3>
                     
                     <div className="mt-1.5 inline-block border border-ink/40 bg-cream px-2 py-0.5 font-mono text-xs font-semibold text-orange">
-                      TECH_SPEC: {project.stack}
+                      {project.stack}
                     </div>
 
                     <p className="mt-3 text-sm sm:text-base leading-relaxed text-muted">
@@ -396,10 +396,6 @@ function ProjectsWindow() {
                       className="h-52 md:h-full min-h-[190px] w-full"
                     />
                   </div>
-                  <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-faint px-1">
-                    <span>ARTIFACT_VIEW</span>
-                    <span>VERIFIED LIVE</span>
-                  </div>
                 </div>
               </div>
 
@@ -407,15 +403,16 @@ function ProjectsWindow() {
               <div className="mt-5 pt-3 border-t-2 border-ink/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
                 <span className="text-faint text-[10px] flex items-center gap-1.5">
                   <Check width={12} height={12} className="pixel-icon text-green" />
-                  PRODUCTION HANDOFF COMPLETE · SOURCE CODE DELIVERED
+                  Delivered & verified live
                 </span>
-                <a
-                  href="#contact"
-                  className="nb-btn inline-flex items-center justify-center gap-2 px-3.5 py-1.5 text-xs hover:bg-yellow transition-colors"
+                <button
+                  type="button"
+                  onClick={() => onOpen?.("contact")}
+                  className="nb-btn inline-flex items-center justify-center gap-2 px-3.5 py-1.5 text-xs hover:bg-yellow transition-colors cursor-pointer"
                 >
-                  <span>[ OPEN PROJECT BRIEF ]</span>
+                  <span>BUILD SIMILAR PROJECT</span>
                   <ArrowRight width={12} height={12} className="pixel-icon" />
-                </a>
+                </button>
               </div>
             </article>
           );
@@ -425,7 +422,7 @@ function ProjectsWindow() {
   );
 }
 
-function ProcessWindow() {
+function ProcessWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
     <div className="space-y-6">
       <WindowHeader
@@ -443,10 +440,7 @@ function ProcessWindow() {
             <div>
               <div className="flex items-center justify-between border-b border-ink/20 pb-2 mb-3">
                 <span className="font-mono text-xs font-bold text-orange">
-                  Step 0{step.step}
-                </span>
-                <span className="font-mono text-[10px] text-faint uppercase">
-                  ACTIVE STAGE
+                  0{step.step}
                 </span>
               </div>
               <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold text-ink">

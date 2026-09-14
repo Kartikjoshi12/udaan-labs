@@ -24,10 +24,10 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
 
       <div className="relative z-[2] px-5 pt-5">
         <div className="flex items-center justify-between gap-2 mb-2 font-mono text-[10px]">
-          <span className="annotation-tag bg-yellow text-[9px] font-bold">UL_ // 2026</span>
+          <span className="annotation-tag bg-yellow text-[9px] font-bold">UL_ // STUDIO</span>
           <span className="text-green font-bold flex items-center gap-1 border border-ink bg-cream px-2 py-0.5 shadow-[1px_1px_0_0_#111111]">
-            <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
-            BUILD: 78% ACTIVE
+            <span className="h-1.5 w-1.5 rounded-full bg-green" />
+            AVAILABLE FOR WORK
           </span>
         </div>
         <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight tracking-tight uppercase text-ink">

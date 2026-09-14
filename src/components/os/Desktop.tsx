@@ -117,7 +117,7 @@ export function Desktop() {
             clock={clock}
             onClose={() => setMobileApp(null)}
           >
-            <WindowContent id={mobileApp} />
+            <WindowContent id={mobileApp} onOpen={openApp} />
           </MobileApp>
         )}
       </div>
@@ -152,20 +152,16 @@ export function Desktop() {
         <WallpaperBg />
         <DesktopIcons onOpen={openApp} />
 
-        {/* Studio Drafting Desk Watermark / Backdrop Marks */}
+        {/* Studio Desk Watermark */}
         <div className="pointer-events-none absolute right-8 top-16 z-10 hidden xl:block font-mono text-[11px] text-muted/60 select-none">
-          <div className="border border-ink/20 bg-cream/70 p-4 nb-shadow-sm max-w-[280px] backdrop-blur-[2px]">
-            <div className="flex items-center justify-between border-b border-ink/20 pb-1.5 mb-2">
-              <span className="font-bold text-ink text-[10px] tracking-wider">UDAAN LAB STATUS</span>
+          <div className="border border-ink/20 bg-cream/70 p-3 nb-shadow-sm max-w-[240px] backdrop-blur-[2px]">
+            <div className="flex items-center justify-between border-b border-ink/20 pb-1.5 mb-1.5">
+              <span className="font-bold text-ink text-[10px] tracking-wider">UDAAN LABS</span>
               <span className="text-[9px] text-green font-bold flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-green" /> ACTIVE
+                <span className="h-1.5 w-1.5 rounded-full bg-green" /> AVAILABLE
               </span>
             </div>
-            <div className="space-y-1 text-[10px] text-muted">
-              <p>PROD_CYCLE: 2026</p>
-              <p>DISPATCH: FAST-TRACK</p>
-              <p className="text-faint">DIGITAL WORKSHOP × EDITORIAL UI</p>
-            </div>
+            <p className="text-[10px] text-muted">Apps & websites built directly.</p>
           </div>
         </div>
 
@@ -173,10 +169,10 @@ export function Desktop() {
           <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
             <div className="border-2 border-ink bg-cream px-6 py-4 text-center text-sm nb-shadow max-w-md">
               <p className="font-mono font-bold text-xs uppercase tracking-wider text-orange mb-1">
-                UDAAN LABS // WORKSPACE READY
+                WORKSPACE
               </p>
               <p className="text-xs text-muted leading-relaxed">
-                Click any desktop tool on the left or use the launcher in the bottom taskbar to explore studio artifacts.
+                Open any desktop tool or use the taskbar to explore work.
               </p>
             </div>
           </div>
@@ -199,7 +195,7 @@ export function Desktop() {
               setMaximized((prev) => ({ ...prev, [id]: !prev[id] }))
             }
           >
-            <WindowContent id={id} />
+            <WindowContent id={id} onOpen={openApp} />
           </Window>
         ))}
 
