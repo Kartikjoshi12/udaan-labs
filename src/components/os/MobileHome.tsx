@@ -3,6 +3,7 @@
 import { site } from "@/lib/site";
 import { apps, dockApps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
+import { soundFx } from "@/lib/sound";
 
 type MobileHomeProps = {
   clock: string;
@@ -12,29 +13,37 @@ type MobileHomeProps = {
 export function MobileHome({ clock, onOpen }: MobileHomeProps) {
   const dock = apps.filter((a) => dockApps.includes(a.id));
 
+  function handleOpen(id: AppId) {
+    soundFx.windowOpen();
+    onOpen(id);
+  }
+
   return (
-    <div className="relative z-[1] flex h-full flex-col text-ink bg-[#f7f4ed]">
-      <div className="flex items-center justify-between border-b-2 border-ink bg-paper px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] font-mono text-xs">
-        <span className="tabular-nums font-semibold">{clock || "09:41"}</span>
-        <span className="font-bold tracking-tight">{site.name}</span>
-        <span className="text-[10px] text-green font-bold flex items-center gap-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-green" /> ONLINE
+    <div className="relative z-[1] flex h-full flex-col text-[#ece5d8] bg-[#0f0d0b] font-mono bg-crt-scanline">
+      {/* Top Mobile Status Header */}
+      <div className="flex items-center justify-between border-b border-[#332b23] bg-[#14120f] px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] text-xs">
+        <span className="tabular-nums font-semibold text-[#ff9e00]">{clock || "09:41"} IST</span>
+        <span className="font-bold tracking-tight text-[#f4ede2]">{site.name}</span>
+        <span className="text-[10px] text-[#22c55e] font-bold flex items-center gap-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e] beacon-hum" /> ON TIME
         </span>
       </div>
 
       <div className="relative z-[2] px-5 pt-5">
-        <div className="flex items-center justify-between gap-2 mb-2 font-mono text-[10px]">
-          <span className="annotation-tag bg-yellow text-[9px] font-bold">UL_ // STUDIO</span>
-          <span className="text-green font-bold flex items-center gap-1 border border-ink bg-cream px-2 py-0.5 shadow-[1px_1px_0_0_#111111]">
-            <span className="h-1.5 w-1.5 rounded-full bg-green" />
-            AVAILABLE FOR WORK
+        <div className="flex items-center justify-between gap-2 mb-2 text-[10px]">
+          <span className="annotation-tag bg-[#ff9e00]/10 border-[#ff9e00]/40 text-[#ff9e00] font-bold">
+            GATE DEL-01 // FIDS
+          </span>
+          <span className="text-[#22c55e] font-semibold flex items-center gap-1 border border-[#22c55e]/30 bg-[#22c55e]/10 px-2 py-0.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e] beacon-hum" />
+            CLEARANCE GRANTED
           </span>
         </div>
-        <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight tracking-tight uppercase text-ink">
+        <h1 className="text-2xl font-bold leading-tight tracking-tight uppercase text-[#f4ede2]">
           {site.tagline}
         </h1>
-        <p className="mt-2 font-mono text-[11px] text-muted">
-          Independent digital workshop · Tap any tool below to inspect work.
+        <p className="mt-2 text-xs text-[#80776d] leading-relaxed">
+          Independent digital flight deck. Tap any channel below to inspect aircraft fleet, past departures, and flight plans.
         </p>
       </div>
 
@@ -43,21 +52,22 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
           <button
             key={app.id}
             type="button"
-            onClick={() => onOpen(app.id)}
-            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
+            onClick={() => handleOpen(app.id)}
+            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform cursor-pointer"
           >
             <div className="relative">
               <span
-                className="icon-tile flex h-14 w-14 items-center justify-center border-2 border-ink"
+                className="icon-tile flex h-14 w-14 items-center justify-center border border-[#3a3228] bg-[#161310] split-flap-module"
                 style={{ backgroundColor: app.fill }}
               >
-                <IconArt id={app.id} size={28} />
+                <IconArt id={app.id} size={26} className="text-[#ece5d8] group-hover:text-[#ff9e00]" />
               </span>
-              <span className="absolute -top-1 -right-1 px-1 text-[7px] font-mono font-bold bg-cream border border-ink">
-                {app.code.split("_")[0]}
-              </span>
+              <span
+                className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full beacon-hum"
+                style={{ backgroundColor: app.accent }}
+              />
             </div>
-            <span className="max-w-[4.5rem] truncate border border-ink bg-cream px-1.5 py-0.2 font-mono text-[10px] shadow-[1px_1px_0_0_#111111]">
+            <span className="max-w-[4.8rem] truncate border border-[#332b23] bg-[#14120f]/90 px-1.5 py-0.5 font-mono text-[10px] text-[#ece5d8]">
               {app.label}
             </span>
           </button>
@@ -66,18 +76,18 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
 
       <div className="mt-auto" />
 
-      <div className="relative z-[2] border-t-2 border-ink bg-paper px-3 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      {/* Dock Bar */}
+      <div className="relative z-[2] border-t border-[#332b23] bg-[#110f0d] px-3 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex max-w-sm items-center justify-around gap-2">
           {dock.map((app) => (
             <button
               key={app.id}
               type="button"
-              onClick={() => onOpen(app.id)}
+              onClick={() => handleOpen(app.id)}
               aria-label={app.label}
-              className="nb-btn flex h-13 w-13 items-center justify-center border-2 border-ink shadow-[2px_2px_0_0_#111111]"
-              style={{ backgroundColor: app.fill }}
+              className="flex h-11 w-11 items-center justify-center border border-[#3a3228] bg-[#161310] active:translate-y-0.5 cursor-pointer split-flap-module"
             >
-              <IconArt id={app.id} size={28} />
+              <IconArt id={app.id} size={22} className="text-[#ece5d8]" />
             </button>
           ))}
         </div>

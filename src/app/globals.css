@@ -1,46 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* Warm editorial & digital workshop palette */
+  /* Airport Solari Departure Board & Air Traffic Control Palette */
+  --board-base: #0f0d0b;
+  --board-module: #181512;
+  --board-card: #201c18;
+  --board-border: #332b23;
+  --board-amber: #ff9e00;
+  --board-amber-dim: #996003;
+  --board-amber-bg: rgba(255, 158, 0, 0.08);
+  --board-green: #22c55e;
+  --board-green-bg: rgba(34, 197, 94, 0.08);
+  --board-orange: #f97316;
+  
   --ink: #111111;
   --paper: #f4ede2;
   --paper-2: #eae0d0;
   --cream: #fbf8f2;
-  --muted: #4a453e;
-  --faint: #7d756b;
-  
-  /* Workshop Accent Tones */
-  --green: #2d8a4e;
-  --green-soft: #e3f3e8;
-  --orange: #e45826;
-  --orange-soft: #fdeee8;
-  --yellow: #f7c948;
-  --yellow-soft: #fef8e7;
-  --blue: #2563eb;
-  --blue-soft: #eaf0fc;
-  
-  --sky: #dde7eb;
-  --window: #fbf8f2;
-  --titlebar: #eedec4;
+  --muted: #574e44;
+  --faint: #8a7f72;
 }
 
 @theme inline {
+  --color-board-base: var(--board-base);
+  --color-board-module: var(--board-module);
+  --color-board-card: var(--board-card);
+  --color-board-border: var(--board-border);
+  --color-board-amber: var(--board-amber);
+  --color-board-amber-dim: var(--board-amber-dim);
+  --color-board-green: var(--board-green);
+  --color-board-orange: var(--board-orange);
+  
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-paper-2: var(--paper-2);
   --color-cream: var(--cream);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
-  --color-green: var(--green);
-  --color-green-soft: var(--green-soft);
-  --color-orange: var(--orange);
-  --color-orange-soft: var(--orange-soft);
-  --color-yellow: var(--yellow);
-  --color-yellow-soft: var(--yellow-soft);
-  --color-blue: var(--blue);
-  --color-blue-soft: var(--blue-soft);
-  --color-window: var(--window);
-  --color-titlebar: var(--titlebar);
+  
   --font-mono: var(--font-ibm-mono);
   --font-display: var(--font-space-grotesk);
 }
@@ -53,167 +50,212 @@ body {
 
 body {
   margin: 0;
-  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
-  color: var(--ink);
-  background-color: #f7f4ed;
+  font-family: var(--font-ibm-mono), monospace;
+  color: #ece5d8;
+  background-color: #0f0d0b;
 }
 
 ::selection {
-  background: var(--yellow);
-  color: var(--ink);
+  background: var(--board-amber);
+  color: #111111;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+/* =========================================================================
+   AIRPORT DEPARTURE BOARD TEXTURES & CRT SCANLINES
+   ========================================================================= */
+.bg-crt-scanline {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(0, 0, 0, 0.28) 50%
+  );
+  background-size: 100% 4px;
+}
+
+/* Beacon Tower Hum Pulse */
+@keyframes beacon-hum-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(255, 158, 0, 0.8);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.92);
+    box-shadow: 0 0 1px rgba(255, 158, 0, 0.2);
   }
 }
 
-/* Clean, calm studio linen & drafting canvas */
-.os-wallpaper {
-  background-color: #f7f4ed;
-  background-image:
-    radial-gradient(#2d2822 0.75px, transparent 0.75px),
-    linear-gradient(to right, rgba(45, 40, 34, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(45, 40, 34, 0.03) 1px, transparent 1px);
-  background-size: 28px 28px, 112px 112px, 112px 112px;
-  background-position: 0 0, -1px -1px, -1px -1px;
+.beacon-hum {
+  animation: beacon-hum-pulse 1.8s ease-in-out infinite;
 }
 
-.os-wallpaper::before {
+/* Split-Flap Card Horizontal Line Seam */
+.split-flap-module {
+  position: relative;
+  background: #181512;
+  border: 1px solid #332b23;
+  color: #ff9e00;
+  font-family: var(--font-ibm-mono), monospace;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.split-flap-module::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.6) 0%, transparent 75%);
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.65);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
   pointer-events: none;
-  z-index: 0;
 }
 
-/* Hard offset neo-brutalist shadows */
-.nb-shadow {
-  box-shadow: 4px 4px 0 0 #111111;
+/* =========================================================================
+   WINDOW MANAGER STYLING (AIRPORT RADAR / CONCOURSE BOARD THEME)
+   ========================================================================= */
+.window-active-shadow {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 0 1px #ff9e00;
+  border-color: #ff9e00 !important;
 }
 
-.nb-shadow-sm {
-  box-shadow: 2px 2px 0 0 #111111;
+.window-inactive-shadow {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-color: #332b23 !important;
 }
 
-.nb-shadow-lg {
-  box-shadow: 6px 6px 0 0 #111111;
+/* Subtle CRT Flicker on Window Initial Render */
+.os-window-enter {
+  animation: crt-flicker-open 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nb-border {
-  border: 2px solid #111111;
+@keyframes crt-flicker-open {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.97) translateY(4px);
+    filter: brightness(1.6);
+  }
+  40% {
+    opacity: 0.85;
+    transform: scale(1.005) translateY(-1px);
+    filter: brightness(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
 }
 
-.nb-border-heavy {
-  border: 3px solid #111111;
+/* =========================================================================
+   BUTTON STYLES & ATC FLIGHT STRIP CARDS
+   ========================================================================= */
+.card-secondary {
+  border: 1px solid #332b23;
+  background-color: #171411;
 }
 
-/* Physical button press effect */
-.nb-btn {
-  border: 2px solid #111111;
-  background: var(--cream);
-  color: var(--ink);
-  font-family: inherit;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  box-shadow: 3px 3px 0 0 #111111;
-  transition: transform 70ms ease, box-shadow 70ms ease, background-color 70ms ease;
-  cursor: pointer;
+.card-secondary:hover {
+  border-color: #4d4033;
+}
+
+.card-inset {
+  border: 1px solid #29221b;
+  background-color: #120f0d;
+}
+
+.btn-base {
+  font-family: var(--font-ibm-mono), monospace;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 80ms ease;
+  cursor: pointer;
 }
 
-.nb-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 0 #111111;
+/* Primary Flight Action (Amber Concourse Button) */
+.btn-primary {
+  background: #ff9e00;
+  color: #0f0d0b;
+  border: 1px solid #ff9e00;
+  font-weight: 700;
 }
 
-.nb-btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 0 #111111;
+.btn-primary:hover {
+  background: #ffb12b;
+  box-shadow: 0 0 10px rgba(255, 158, 0, 0.35);
 }
 
-.nb-btn-primary {
-  background: #111111;
-  color: #fbf8f2;
+.btn-primary:active {
+  transform: translateY(1px);
 }
 
-.nb-btn-primary:hover {
-  background: #222222;
-  color: #fbf8f2;
+/* Secondary Button (Dark Cockpit Instrument) */
+.btn-secondary {
+  background: #1c1814;
+  color: #ece5d8;
+  border: 1px solid #3a3228;
 }
 
+.btn-secondary:hover {
+  background: #27221d;
+  border-color: #55483a;
+  color: #ffffff;
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+
+/* Destructive / Abort / Close Action */
+.btn-destructive {
+  background: #171411;
+  color: #ece5d8;
+  border: 1px solid #3a3228;
+}
+
+.btn-destructive:hover {
+  background: #f97316;
+  color: #ffffff;
+  border-color: #ea580c;
+}
+
+/* Desktop Flight Icon Tile */
 .icon-tile {
-  border: 2px solid #111111 !important;
-  box-shadow: 3px 3px 0 0 #111111;
-  transition: transform 70ms ease, box-shadow 70ms ease;
+  border: 1px solid #3a3228;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background: #161310;
+  transition: all 100ms ease;
 }
 
 .icon-tile:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 0 #111111;
+  border-color: #ff9e00;
+  box-shadow: 0 4px 16px rgba(255, 158, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .icon-tile:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 0 #111111;
+  transform: translateY(1px);
 }
 
-/* Stamp / Annotation Badges */
+/* Status Annotation Tag */
 .annotation-tag {
   font-family: var(--font-ibm-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1.5px solid #111111;
-  padding: 2px 6px;
-  background: var(--paper);
-  box-shadow: 2px 2px 0 0 #111111;
+  border: 1px solid #3a3228;
+  padding: 1px 6px;
+  background: #181512;
 }
 
-.os-window-enter {
-  animation: os-pop 120ms steps(2, end);
-}
-
-.os-app-enter {
-  animation: os-slide-up 160ms steps(3, end);
-}
-
-/* Pixelarticons + Kenney sprites stay sharp */
 .pixel-icon {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   shape-rendering: crispEdges;
   flex-shrink: 0;
-}
-
-.pixel-panel {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
-
-@keyframes os-pop {
-  from {
-    opacity: 0;
-    transform: translate(4px, 4px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes os-slide-up {
-  from {
-    opacity: 0.4;
-    transform: translateY(10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

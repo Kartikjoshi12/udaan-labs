@@ -6,7 +6,8 @@ import type { AppId } from "./apps";
 import { PixelPhoto } from "./PixelPhoto";
 import { TicTacToe } from "./TicTacToe";
 import { WallpaperWindow } from "./WallpaperWindow";
-import { Check, ArrowRight, Laptop, Smartphone, Server, Zap } from "pixelarticons/react";
+import { Check, ArrowRight } from "pixelarticons/react";
+import { soundFx } from "@/lib/sound";
 
 export function WindowContent({
   id,
@@ -44,12 +45,12 @@ function FrameImage({
 }) {
   return (
     <div
-      className={`relative overflow-hidden border-2 border-ink bg-paper-2 ${className}`}
+      className={`relative overflow-hidden border border-[#3a3228] bg-[#14120f] ${className}`}
     >
       <PixelPhoto
         src={src}
         alt={alt}
-        className="absolute inset-0 h-full w-full"
+        className="absolute inset-0 h-full w-full opacity-90 hover:opacity-100 transition-opacity"
       />
     </div>
   );
@@ -65,14 +66,14 @@ function WindowHeader({
   subtitle: string;
 }) {
   return (
-    <div className="border-b-2 border-ink pb-3 mb-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+    <div className="border-b border-[#332b23] pb-3 mb-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 font-mono">
       <div className="flex items-baseline gap-3">
-        <span className="font-mono text-xs font-bold text-orange">{code}</span>
-        <h2 className="font-[family-name:var(--font-space-grotesk)] text-2xl md:text-3xl font-bold tracking-tight text-ink">
+        <span className="text-xs font-bold text-[#ff9e00]">{code}</span>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#f4ede2] uppercase">
           {title}
         </h2>
       </div>
-      <p className="font-mono text-xs text-muted max-w-sm sm:text-right">
+      <p className="text-xs text-[#80776d] max-w-sm sm:text-right">
         {subtitle}
       </p>
     </div>
@@ -81,109 +82,117 @@ function WindowHeader({
 
 function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
-    <div className="space-y-6">
-      {/* Studio Header bar */}
-      <div className="border-b-2 border-ink pb-3 mb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+    <div className="space-y-6 font-mono">
+      {/* Solari Departure Gate Header */}
+      <div className="border-b border-[#332b23] pb-3 mb-2 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
         <div className="flex items-center gap-3">
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-2xl md:text-3xl font-bold tracking-tight text-ink">
-            Udaan Labs
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#f4ede2] uppercase">
+            Udaan Aerodrome
           </h2>
-          <span className="border border-ink bg-green-soft px-2 py-0.5 font-mono text-[9px] font-bold text-green">
-            ● PRODUCTION READY
+          <span className="border border-[#22c55e]/40 bg-[#22c55e]/10 px-2 py-0.5 text-[9px] font-bold text-[#22c55e] flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e] beacon-hum" />
+            ON TIME // AVAILABLE FOR SPRINT
           </span>
         </div>
-        <p className="font-mono text-xs text-muted max-w-sm sm:text-right">
-          Independent digital workshop · India / Remote
+        <p className="text-xs text-[#80776d] max-w-sm sm:text-right">
+          Independent Digital Flight Deck · New Delhi / Bangalore
         </p>
       </div>
 
-      {/* DISTINCTIVE EDITORIAL HERO BLOCK */}
-      <div className="border-2 border-ink bg-paper p-5 sm:p-7 nb-shadow relative overflow-hidden">
-        {/* Clean top line */}
-        <div className="flex items-center justify-between border-b border-ink/20 pb-3 mb-5 font-mono text-xs text-muted">
+      {/* Primary Split-Flap Gate Overview Panel */}
+      <div className="border border-[#332b23] bg-[#161310] p-5 sm:p-7 relative overflow-hidden split-flap-module">
+        <div className="flex items-center justify-between border-b border-[#29221b] pb-3 mb-5 text-xs text-[#80776d]">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-ink">UL_</span>
-            <span className="text-faint">/</span>
-            <span className="text-[11px]">STUDIO WORKSPACE</span>
+            <span className="font-bold text-[#ff9e00]">UL_FIDS</span>
+            <span>/</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#ece5d8]">
+              GATE DEL-01 · TERMINAL INFO
+            </span>
           </div>
           <div className="flex items-center gap-3 text-[11px]">
-            <span className="border border-ink bg-cream px-1.5 py-0.5 font-mono text-[10px]">
-              EST. 2025
+            <span className="border border-[#3a3228] bg-[#110f0d] px-2 py-0.5 text-[10px] text-[#ff9e00]">
+              EST. 2025 // ACTIVE
             </span>
           </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-12 items-center">
-          {/* Main Editorial Statement */}
+          {/* Main Flight Manifesto */}
           <div className="lg:col-span-7 space-y-4">
-            <h1 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-ink uppercase">
-              Apps + websites for people who just want the thing built.
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-[#f4ede2] uppercase">
+              Software engineered for takeoff. Handed over ready to fly.
             </h1>
 
-            <p className="text-sm sm:text-base leading-relaxed text-muted max-w-xl">
-              Small team. No pitch decks for fun. Tell us what you need — we scope it, design it, and get it live.
+            <p className="text-sm sm:text-base leading-relaxed text-[#c2b8a8] max-w-xl">
+              {site.hero.subtitle}
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
+            <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
               <button
                 type="button"
-                onClick={() => onOpen?.("projects")}
-                className="nb-btn nb-btn-primary px-4 py-2 text-xs flex items-center gap-2"
+                onClick={() => {
+                  soundFx.flap();
+                  onOpen?.("projects");
+                }}
+                className="btn-base btn-primary px-4 py-2 text-xs flex items-center gap-2"
               >
-                <span>EXPLORE WORK</span>
+                <span>VIEW DEPARTURES</span>
                 <ArrowRight width={14} height={14} className="pixel-icon" />
               </button>
               <button
                 type="button"
-                onClick={() => onOpen?.("contact")}
-                className="nb-btn px-3.5 py-2 text-xs hover:bg-yellow transition-colors"
+                onClick={() => {
+                  soundFx.flap();
+                  onOpen?.("contact");
+                }}
+                className="btn-base btn-secondary px-3.5 py-2 text-xs"
               >
-                <span>START A PROJECT</span>
+                <span>REQUEST CLEARANCE</span>
               </button>
             </div>
           </div>
 
-          {/* Small Retro Computer / Lab Status Element (10-15% pixel art) */}
+          {/* Air Traffic Control Radar Telemetry Card */}
           <div className="lg:col-span-5">
-            <div className="border-2 border-ink bg-cream p-4 nb-shadow relative">
-              <div className="flex items-center justify-between border-b-2 border-ink pb-2 mb-3">
-                <div className="flex items-center gap-2 font-mono text-xs font-bold text-ink">
-                  <Laptop width={16} height={16} className="pixel-icon text-orange" />
-                  <span>UDAAN.EXE</span>
+            <div className="card-secondary p-4 relative border border-[#3a3228]">
+              <div className="flex items-center justify-between border-b border-[#29221b] pb-2 mb-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#ece5d8]">
+                  <span className="text-[#ff9e00]">✈</span>
+                  <span>TOWER_TELEMETRY.LOG</span>
                 </div>
-                <span className="inline-flex items-center gap-1 font-mono text-[10px] text-green font-bold">
-                  <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
-                  ONLINE
+                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#22c55e] font-bold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e] beacon-hum" />
+                  RADAR LOCKED
                 </span>
               </div>
 
-              <div className="space-y-3 font-mono text-xs">
-                <div className="border border-ink/30 bg-paper p-2.5">
+              <div className="space-y-3 text-xs">
+                <div className="card-inset p-2.5 border border-[#29221b]">
                   <div className="flex items-center justify-between text-[11px] mb-1">
-                    <span className="text-faint uppercase text-[9px]">CAPACITY</span>
-                    <span className="font-bold text-green flex items-center gap-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-green" /> ACCEPTING CLIENTS
+                    <span className="text-[#80776d] uppercase text-[9px]">RUNWAY CAPACITY</span>
+                    <span className="font-bold text-[#22c55e] flex items-center gap-1">
+                      <span>● ACCEPTING SPRINTS</span>
                     </span>
                   </div>
-                  <p className="text-[11px] text-muted leading-snug">
-                    Booking project sprints for web apps, mobile products, and MVP launches.
+                  <p className="text-[12px] text-[#c2b8a8] leading-snug">
+                    Booking Q3/Q4 engineering slots for mobile flight decks, Next.js commerce, and rapid MVPs.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-ink/15 text-[11px]">
-                  <div className="border border-ink/30 bg-paper p-2">
-                    <span className="text-[9px] text-faint block uppercase">TIMELINE</span>
-                    <span className="text-xs font-bold text-ink">2 – 6 WEEKS</span>
+                <div className="grid grid-cols-2 gap-2 pt-1 text-[11px]">
+                  <div className="card-inset p-2 border border-[#29221b]">
+                    <span className="text-[9px] text-[#80776d] block uppercase">TAKEOFF TIMELINE</span>
+                    <span className="text-xs font-bold text-[#f4ede2]">3 – 6 WEEKS</span>
                   </div>
-                  <div className="border border-ink/30 bg-paper p-2">
-                    <span className="text-[9px] text-faint block uppercase">LOCATION</span>
-                    <span className="text-xs font-bold text-ink">INDIA / REMOTE</span>
+                  <div className="card-inset p-2 border border-[#29221b]">
+                    <span className="text-[9px] text-[#80776d] block uppercase">BASE COORDINATES</span>
+                    <span className="text-xs font-bold text-[#f4ede2]">DEL / BLR (GMT+5:30)</span>
                   </div>
                 </div>
 
-                <div className="border border-ink/20 bg-yellow-soft p-2 text-[10px] text-muted flex items-center gap-2">
-                  <Zap width={12} height={12} className="pixel-icon text-orange shrink-0" />
-                  <span>Direct engineer communication · Weekly demo builds</span>
+                <div className="border border-[#3a3228] bg-[#161310] p-2 text-[11px] text-[#c2b8a8] flex items-center gap-2">
+                  <span className="text-[#ff9e00] font-bold">⚡</span>
+                  <span>Direct lead engineer comms · Weekly Thursday staging test builds</span>
                 </div>
               </div>
             </div>
@@ -191,20 +200,20 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
         </div>
       </div>
 
-      {/* Asymmetric Studio Info & Photo */}
+      {/* Specific Human Story & Bench Photo */}
       <div className="grid gap-5 md:grid-cols-12 items-stretch">
-        <div className="md:col-span-7 flex flex-col justify-between border-2 border-ink bg-cream p-5">
+        <div className="md:col-span-7 flex flex-col justify-between card-secondary p-5 border border-[#332b23]">
           <div>
             <div className="grid grid-cols-2 gap-3">
               {site.facts.map((fact) => (
                 <div
                   key={fact.label}
-                  className="border border-ink bg-paper p-3 shadow-[1px_1px_0_0_#111111]"
+                  className="card-inset p-3 border border-[#29221b]"
                 >
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-faint">
+                  <p className="text-[9px] uppercase tracking-wider text-[#80776d]">
                     {fact.label}
                   </p>
-                  <p className="mt-1 font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-ink">
+                  <p className="mt-1 text-sm font-bold text-[#f4ede2]">
                     {fact.value}
                   </p>
                 </div>
@@ -212,34 +221,24 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
             </div>
           </div>
 
-          <div className="mt-5 border-t border-ink/20 pt-4">
-            <p className="text-xs sm:text-sm leading-relaxed text-muted">
+          <div className="mt-5 border-t border-[#29221b] pt-4">
+            <p className="text-xs sm:text-sm leading-relaxed text-[#c2b8a8]">
               {site.whyUs}
             </p>
           </div>
         </div>
 
-        <div className="md:col-span-5 flex flex-col justify-between border-2 border-ink bg-paper p-3">
+        <div className="md:col-span-5 flex flex-col justify-between card-secondary p-3 border border-[#332b23]">
           <FrameImage
             src={site.images.aboutHero}
             alt="Studio workbench with development hardware"
             className="w-full h-48 md:h-full min-h-[160px]"
           />
-          <div className="mt-2.5 flex items-center justify-between font-mono text-[10px] text-faint px-1">
-            <span>STUDIO BENCH</span>
-            <span>WORKING BUILD</span>
+          <div className="mt-2.5 flex items-center justify-between text-[10px] text-[#80776d] px-1">
+            <span>OPERATIONS DESK</span>
+            <span>WORKING BENCH</span>
           </div>
         </div>
-      </div>
-
-      {/* Studio Philosophy Banner */}
-      <div className="border-2 border-ink bg-yellow p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <p className="font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-ink">
-          {site.tagline}
-        </p>
-        <span className="font-mono text-[10px] text-ink/80 shrink-0 uppercase tracking-wider font-semibold">
-          FAST ITERATIONS · HONEST SCOPE
-        </span>
       </div>
     </div>
   );
@@ -247,46 +246,48 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
 
 function ServicesWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       <WindowHeader
-        code="[02]"
-        title="What We Build"
-        subtitle="Focused execution across three clear production tracks."
+        code="[02_FLEET]"
+        title="Fleet Capabilities"
+        subtitle="Focused aircraft engineering across three production categories."
       />
 
       <div className="grid gap-5">
         {site.services.map((service, index) => (
           <div
             key={service.title}
-            className="border-2 border-ink bg-cream p-5 nb-shadow relative"
+            className="card-secondary p-5 relative hover:border-[#ff9e00]/50 transition-colors border border-[#332b23]"
           >
             {/* Header */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/20 pb-2.5 mb-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#29221b] pb-2.5 mb-3">
               <div className="flex items-baseline gap-2.5">
-                <span className="font-mono text-xs font-bold text-orange">
-                  0{index + 1}
+                <span className="text-xs font-bold text-[#ff9e00]">
+                  {service.code}
                 </span>
-                <span className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold text-ink">
+                <span className="text-lg font-bold text-[#f4ede2]">
                   {service.title}
                 </span>
               </div>
+              <span className="text-[10px] text-[#80776d] tracking-wider uppercase">
+                {service.role}
+              </span>
             </div>
 
             <div className="grid sm:grid-cols-12 gap-5 items-center">
               <div className="sm:col-span-8">
-                <p className="text-sm leading-relaxed text-muted">
+                <p className="text-sm leading-relaxed text-[#c2b8a8]">
                   {service.body}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10px]">
-                  <span className="border border-ink/30 bg-paper px-2 py-0.5 text-ink">
-                    Weekly builds
-                  </span>
-                  <span className="border border-ink/30 bg-paper px-2 py-0.5 text-ink">
-                    Direct engineer access
-                  </span>
-                  <span className="border border-ink/30 bg-paper px-2 py-0.5 text-ink">
-                    Complete code ownership
-                  </span>
+                <div className="mt-4 flex flex-wrap gap-2 text-[10px]">
+                  {service.specs.map((spec) => (
+                    <span
+                      key={spec}
+                      className="border border-[#3a3228] bg-[#110f0d] px-2 py-0.5 text-[#ff9e00]"
+                    >
+                      {spec}
+                    </span>
+                  ))}
                 </div>
               </div>
 
@@ -307,116 +308,114 @@ function ServicesWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
 
 function ProjectsWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       <WindowHeader
-        code="[03]"
-        title="Selected Work"
-        subtitle="Real production software engineered for high utility, reliability, and speed."
+        code="[03_DEPARTURES]"
+        title="Flight Departures (Shipped Work)"
+        subtitle="Live production software that successfully completed flight clearance and took off."
       />
 
-      <div className="space-y-7">
-        {site.projects.map((project, idx) => {
-          const isAlt = idx % 2 === 1;
-          return (
-            <article
-              key={project.title}
-              className="border-2 border-ink bg-paper p-5 sm:p-6 nb-shadow transition-transform hover:-translate-y-0.5"
-            >
-              {/* Project Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-ink pb-3 mb-4 font-mono text-xs">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 border border-ink bg-ink text-cream px-2 py-0.5 font-bold tracking-wider text-[11px]">
-                    {project.type.includes("Mobile") ? (
-                      <Smartphone width={12} height={12} className="pixel-icon text-yellow" />
-                    ) : project.type.includes("Ops") ? (
-                      <Server width={12} height={12} className="pixel-icon text-yellow" />
-                    ) : (
-                      <Laptop width={12} height={12} className="pixel-icon text-yellow" />
-                    )}
-                    {project.id}
-                  </span>
-                  <span className="text-faint">/</span>
-                  <span className="font-bold text-ink uppercase tracking-wide">
-                    {project.type}
-                  </span>
-                </div>
+      {/* Solari Departure Board Table Header */}
+      <div className="border border-[#332b23] bg-[#161310] p-3 text-xs text-[#80776d] hidden md:grid grid-cols-12 gap-2 uppercase tracking-wider font-bold">
+        <div className="col-span-2">Flight ID</div>
+        <div className="col-span-3">Aircraft / Stack</div>
+        <div className="col-span-3">Destination</div>
+        <div className="col-span-2">Gate</div>
+        <div className="col-span-2 text-right">Flight Status</div>
+      </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="border border-ink bg-cream px-2 py-0.5 font-mono text-[10px] text-muted">
-                    {project.year}
-                  </span>
-                  <span className="border border-ink bg-yellow px-2 py-0.5 font-mono text-[10px] font-bold text-ink flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green" />
-                    {project.status}
-                  </span>
-                </div>
-              </div>
-
-              {/* Asymmetric Artifact Layout */}
-              <div className={`grid gap-6 items-stretch md:grid-cols-12 ${isAlt ? "md:flex-row-reverse" : ""}`}>
-                <div className={`${isAlt ? "md:order-2" : "md:order-1"} md:col-span-7 flex flex-col justify-between`}>
-                  <div>
-                    <h3 className="font-[family-name:var(--font-space-grotesk)] text-2xl sm:text-3xl font-bold tracking-tight text-ink uppercase">
-                      {project.title}
-                    </h3>
-                    
-                    <div className="mt-1.5 inline-block border border-ink/40 bg-cream px-2 py-0.5 font-mono text-xs font-semibold text-orange">
-                      {project.stack}
-                    </div>
-
-                    <p className="mt-3 text-sm sm:text-base leading-relaxed text-muted">
-                      {project.blurb}
-                    </p>
-                  </div>
-
-                  <div className="mt-5 space-y-3">
-                    <div className="border-2 border-ink bg-cream p-3 font-mono text-xs text-ink flex items-center gap-2.5 shadow-[2px_2px_0_0_#111111]">
-                      <span className="h-2 w-2 bg-green rounded-full shrink-0" />
-                      <span className="font-medium">{project.metrics}</span>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="border border-ink bg-paper px-2 py-0.5 font-mono text-[10px] text-muted"
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={`${isAlt ? "md:order-1" : "md:order-2"} md:col-span-5 flex flex-col justify-between`}>
-                  <div className="border-2 border-ink bg-paper-2 p-1.5">
-                    <FrameImage
-                      src={project.image}
-                      alt={`${project.title} lab artifact visual`}
-                      className="h-52 md:h-full min-h-[190px] w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer action bar */}
-              <div className="mt-5 pt-3 border-t-2 border-ink/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
-                <span className="text-faint text-[10px] flex items-center gap-1.5">
-                  <Check width={12} height={12} className="pixel-icon text-green" />
-                  Delivered & verified live
+      <div className="space-y-6">
+        {site.projects.map((project) => (
+          <article
+            key={project.title}
+            className="border border-[#332b23] bg-[#14120f] p-5 sm:p-6 transition-all hover:border-[#ff9e00]/60 split-flap-module"
+          >
+            {/* Flight Header */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#29221b] pb-3 mb-4 text-xs">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 border border-[#ff9e00] bg-[#110f0d] text-[#ff9e00] px-2 py-0.5 font-bold tracking-wider text-[11px]">
+                  ✈ {project.id}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => onOpen?.("contact")}
-                  className="nb-btn inline-flex items-center justify-center gap-2 px-3.5 py-1.5 text-xs hover:bg-yellow transition-colors cursor-pointer"
-                >
-                  <span>BUILD SIMILAR PROJECT</span>
-                  <ArrowRight width={12} height={12} className="pixel-icon" />
-                </button>
+                <span className="text-[#80776d]">/</span>
+                <span className="font-bold text-[#f4ede2] uppercase tracking-wide">
+                  {project.title}
+                </span>
               </div>
-            </article>
-          );
-        })}
+
+              <div className="flex items-center gap-2">
+                <span className="border border-[#3a3228] bg-[#110f0d] px-2 py-0.5 text-[10px] text-[#80776d]">
+                  {project.gate}
+                </span>
+                <span className="border border-[#22c55e]/40 bg-[#22c55e]/10 px-2 py-0.5 text-[10px] font-bold text-[#22c55e] flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e] beacon-hum" />
+                  {project.flightStatus}
+                </span>
+              </div>
+            </div>
+
+            {/* Layout */}
+            <div className="grid gap-6 items-stretch md:grid-cols-12">
+              <div className="md:col-span-7 flex flex-col justify-between">
+                <div>
+                  <div className="inline-block border border-[#3a3228] bg-[#161310] px-2 py-0.5 text-xs font-semibold text-[#ff9e00]">
+                    {project.stack}
+                  </div>
+
+                  <p className="mt-3 text-sm leading-relaxed text-[#c2b8a8]">
+                    {project.blurb}
+                  </p>
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  <div className="card-inset p-2.5 text-xs text-[#f4ede2] flex items-center gap-2.5 border border-[#29221b]">
+                    <span className="h-2 w-2 bg-[#22c55e] rounded-full shrink-0" />
+                    <span className="font-medium text-[11px]">{project.metrics}</span>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="border border-[#29221b] bg-[#110f0d] px-2 py-0.5 text-[10px] text-[#80776d]"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="md:col-span-5 flex flex-col justify-between">
+                <div className="border border-[#3a3228] bg-[#161310] p-1.5">
+                  <FrameImage
+                    src={project.image}
+                    alt={`${project.title} flight artifact visual`}
+                    className="h-52 md:h-full min-h-[190px] w-full"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Footer action bar */}
+            <div className="mt-5 pt-3 border-t border-[#29221b] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <span className="text-[#80776d] text-[10px] flex items-center gap-1.5">
+                <Check width={12} height={12} className="pixel-icon text-[#22c55e]" />
+                Delivered to client infrastructure & live in production
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  soundFx.flap();
+                  onOpen?.("contact");
+                }}
+                className="btn-base btn-secondary px-3.5 py-1.5 text-xs flex items-center gap-1.5"
+              >
+                <span>REQUEST SIMILAR TAKEOFF</span>
+                <ArrowRight width={12} height={12} className="pixel-icon" />
+              </button>
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   );
@@ -424,45 +423,45 @@ function ProjectsWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
 
 function ProcessWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       <WindowHeader
-        code="[04]"
-        title="How We Work"
-        subtitle="Short feedback loops. You always know what is being built and shipped this week."
+        code="[04_FLIGHT_PLAN]"
+        title="Flight Plan (How We Work)"
+        subtitle="Clear waypoints. You always know what is being built, tested, and cleared for release."
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
         {site.process.map((step) => (
           <div
             key={step.step}
-            className="border-2 border-ink bg-paper p-5 nb-shadow-sm flex flex-col justify-between"
+            className="card-secondary p-5 flex flex-col justify-between hover:border-[#ff9e00]/50 transition-colors border border-[#332b23]"
           >
             <div>
-              <div className="flex items-center justify-between border-b border-ink/20 pb-2 mb-3">
-                <span className="font-mono text-xs font-bold text-orange">
-                  0{step.step}
+              <div className="flex items-center justify-between border-b border-[#29221b] pb-2 mb-3">
+                <span className="text-xs font-bold text-[#ff9e00]">
+                  WAYPOINT {step.step} // {step.flightCode}
                 </span>
               </div>
-              <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-bold text-ink">
+              <h3 className="text-lg font-bold text-[#f4ede2]">
                 {step.title}
               </h3>
-              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted">
+              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#c2b8a8]">
                 {step.body}
               </p>
             </div>
 
-            <div className="mt-4 pt-2 border-t border-ink/10 flex items-center gap-1.5 font-mono text-[10px] text-faint">
-              <Check width={12} height={12} className="pixel-icon text-green" />
+            <div className="mt-4 pt-2 border-t border-[#29221b] flex items-center gap-1.5 text-[10px] text-[#80776d]">
+              <Check width={12} height={12} className="pixel-icon text-[#22c55e]" />
               <span>Transparent weekly sign-off</span>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="border-2 border-ink bg-cream p-4 text-xs text-muted flex items-center justify-between">
+      <div className="card-inset p-4 text-xs text-[#c2b8a8] flex items-center justify-between border border-[#29221b]">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-green shrink-0" />
-          <span>Average project handoff timeline: 2 to 6 weeks from kick-off to production.</span>
+          <span className="h-2 w-2 rounded-full bg-[#22c55e] shrink-0 beacon-hum" />
+          <span>Average mission duration: 3 to 6 weeks from kick-off to live production clearance.</span>
         </div>
       </div>
     </div>
@@ -475,56 +474,57 @@ function ContactWindow() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    soundFx.flap();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
     const subject = encodeURIComponent(
-      `[Project Inquiry] From ${name || "Website Visitor"}`,
+      `[Flight Clearance Inquiry] From ${name || "Sender"}`,
     );
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nProject Scope:\n${message}`,
+      `Callsign / Team: ${name}\nEmail: ${email}\n\nMission Brief:\n${message}`,
     );
     window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
     setHint(true);
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       <WindowHeader
-        code="[05]"
-        title="Start a Project"
-        subtitle="Talk directly with the people building it. No intermediary sales reps."
+        code="[05_TOWER]"
+        title="Control Tower (Inquiries)"
+        subtitle="Direct channel with lead engineers. No sales account layers."
       />
 
       <div className="grid gap-6 md:grid-cols-12 items-start">
         <div className="md:col-span-5 space-y-4">
-          <div className="border-2 border-ink bg-paper p-5 nb-shadow-sm">
-            <h3 className="font-[family-name:var(--font-space-grotesk)] text-xl font-bold text-ink">
+          <div className="card-secondary p-5 border border-[#332b23]">
+            <h3 className="text-xl font-bold text-[#f4ede2]">
               {contact.heading}
             </h3>
-            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted">
+            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#c2b8a8]">
               {contact.body}
             </p>
           </div>
 
-          <div className="border-2 border-ink bg-cream p-4 space-y-3 font-mono text-xs">
+          <div className="card-inset p-4 space-y-3 text-xs border border-[#29221b]">
             <div>
-              <span className="text-[10px] text-faint block uppercase">DIRECT INBOX</span>
+              <span className="text-[10px] text-[#80776d] block uppercase">TOWER FREQUENCY / INBOX</span>
               <a
-                className="font-bold text-ink hover:text-orange underline"
+                className="font-bold text-[#ff9e00] hover:underline"
                 href={`mailto:${contact.email}`}
               >
                 {contact.email}
               </a>
             </div>
-            <div className="border-t border-ink/20 pt-2">
-              <span className="text-[10px] text-faint block uppercase">LOCATION</span>
-              <span className="text-ink">{contact.location}</span>
+            <div className="border-t border-[#29221b] pt-2">
+              <span className="text-[10px] text-[#80776d] block uppercase">BASE LOCATION</span>
+              <span className="text-[#ece5d8]">{contact.location}</span>
             </div>
-            <div className="border-t border-ink/20 pt-2">
-              <span className="text-[10px] text-faint block uppercase">TYPICAL RESPONSE</span>
-              <span className="text-green font-semibold">Same or next business day</span>
+            <div className="border-t border-[#29221b] pt-2">
+              <span className="text-[10px] text-[#80776d] block uppercase">RESPONSE TIME</span>
+              <span className="text-[#22c55e] font-semibold">Within 24 hours directly from a lead engineer</span>
             </div>
           </div>
         </div>
@@ -532,57 +532,57 @@ function ContactWindow() {
         <div className="md:col-span-7">
           <form
             onSubmit={onSubmit}
-            className="border-2 border-ink bg-paper p-5 nb-shadow space-y-4"
+            className="border border-[#332b23] bg-[#161310] p-5 space-y-4"
           >
             <div className="space-y-1">
-              <label className="font-mono text-[10px] uppercase tracking-wider text-muted font-bold">
-                Your Name / Team
+              <label className="text-[10px] uppercase tracking-wider text-[#80776d] font-bold">
+                Callsign / Your Name / Team
               </label>
               <input
                 name="name"
                 required
-                placeholder="e.g. Alex Morgan"
-                className="min-h-10 w-full border-2 border-ink bg-cream px-3 font-mono text-xs outline-none focus:bg-cream focus:border-orange transition-colors"
+                placeholder="e.g. Alex Morgan (Northline Logistics)"
+                className="min-h-10 w-full border border-[#3a3228] bg-[#110f0d] px-3 font-mono text-xs text-[#ece5d8] outline-none focus:border-[#ff9e00] transition-colors"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-mono text-[10px] uppercase tracking-wider text-muted font-bold">
-                Email Address
+              <label className="text-[10px] uppercase tracking-wider text-[#80776d] font-bold">
+                Return Frequency (Email Address)
               </label>
               <input
                 name="email"
                 type="email"
                 required
                 placeholder="alex@company.com"
-                className="min-h-10 w-full border-2 border-ink bg-cream px-3 font-mono text-xs outline-none focus:bg-cream focus:border-orange transition-colors"
+                className="min-h-10 w-full border border-[#3a3228] bg-[#110f0d] px-3 font-mono text-xs text-[#ece5d8] outline-none focus:border-[#ff9e00] transition-colors"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-mono text-[10px] uppercase tracking-wider text-muted font-bold">
-                What are you trying to build?
+              <label className="text-[10px] uppercase tracking-wider text-[#80776d] font-bold">
+                Mission Brief (What are you trying to build?)
               </label>
               <textarea
                 name="message"
                 required
                 rows={4}
-                placeholder="Briefly describe the mobile app, web app, or site you need, plus any ideal timeline."
-                className="w-full border-2 border-ink bg-cream px-3 py-2 font-mono text-xs outline-none focus:bg-cream focus:border-orange transition-colors"
+                placeholder="Briefly describe the mobile app, web platform, or MVP you need, plus any ideal takeoff timeframe."
+                className="w-full border border-[#3a3228] bg-[#110f0d] px-3 py-2 font-mono text-xs text-[#ece5d8] outline-none focus:border-[#ff9e00] transition-colors"
               />
             </div>
 
             <button
               type="submit"
-              className="nb-btn nb-btn-primary min-h-11 w-full text-xs font-mono font-bold tracking-wider flex items-center justify-center gap-2"
+              className="btn-base btn-primary min-h-11 w-full text-xs font-bold tracking-wider flex items-center justify-center gap-2"
             >
-              <span>SEND MESSAGE</span>
+              <span>TRANSMIT CLEARANCE REQUEST</span>
               <ArrowRight width={14} height={14} className="pixel-icon" />
             </button>
 
             {hint && (
-              <p className="font-mono text-[11px] text-muted text-center">
-                If your client didn’t launch, write directly to {contact.email}
+              <p className="text-[11px] text-[#80776d] text-center">
+                If your client didn’t launch, transmit directly to {contact.email}
               </p>
             )}
           </form>

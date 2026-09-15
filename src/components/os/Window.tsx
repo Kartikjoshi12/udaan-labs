@@ -9,11 +9,14 @@ import {
   type ReactNode,
 } from "react";
 import { Checkbox, Close, Minus } from "pixelarticons/react";
+import { soundFx } from "@/lib/sound";
 
 type WindowProps = {
   id: string;
   title: string;
+  gateCode?: string;
   zIndex: number;
+  isActive?: boolean;
   maximized?: boolean;
   initialX?: number;
   initialY?: number;
@@ -28,14 +31,16 @@ type WindowProps = {
 type Edge = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
 
 const DRAG_THRESHOLD = 4;
-const MIN_W = 280;
-const MIN_H = 200;
-const MENU = 48;
-const TASK = 72;
+const MIN_W = 320;
+const MIN_H = 240;
+const MENU = 40;
+const TASK = 60;
 
 export function Window({
   title,
+  gateCode = "FIDS",
   zIndex,
+  isActive = true,
   maximized = false,
   initialX = 120,
   initialY = 80,
@@ -168,13 +173,14 @@ export function Window({
       if (moveSession.current?.pointerId === e.pointerId) {
         moveSession.current = null;
         setDragging(false);
+        document.body.style.userSelect = "";
       }
       if (resizeSession.current?.pointerId === e.pointerId) {
         resizeSession.current = null;
         setResizing(false);
+        document.body.style.userSelect = "";
         document.body.style.cursor = "";
       }
-      document.body.style.userSelect = "";
     }
 
     window.addEventListener("pointermove", onMove);
@@ -188,30 +194,21 @@ export function Window({
   }, [applyResize, clampPos]);
 
   useEffect(() => {
-    function onViewportResize() {
-      setPos((p) => clampPos(p.x, p.y, sizeRef.current.w, sizeRef.current.h));
-      setSize((s) => ({
-        w: Math.min(s.w, window.innerWidth - 8),
-        h: Math.min(s.h, window.innerHeight - MENU - TASK),
-      }));
+    function onResize() {
+      setPos((prev) =>
+        clampPos(prev.x, prev.y, sizeRef.current.w, sizeRef.current.h),
+      );
     }
-    window.addEventListener("resize", onViewportResize);
-    return () => window.removeEventListener("resize", onViewportResize);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, [clampPos]);
-
-  useEffect(() => {
-    setSize({
-      w: Math.min(initialW, Math.max(MIN_W, window.innerWidth - 48)),
-      h: Math.min(initialH, Math.max(MIN_H, window.innerHeight - MENU - TASK - 24)),
-    });
-    setPos(clampPos(initialX, initialY, initialW, initialH));
-  }, [clampPos, initialH, initialW, initialX, initialY]);
 
   const onTitlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
-    if (maximized) return;
     if ((e.target as HTMLElement).closest("button")) return;
+    e.preventDefault();
     onFocus();
+    soundFx.flap();
     moveSession.current = {
       pointerId: e.pointerId,
       startMouseX: e.clientX,
@@ -225,11 +222,10 @@ export function Window({
 
   const onResizePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
-    if (maximized) return;
     const edge = e.currentTarget.getAttribute("data-edge") as Edge | null;
     if (!edge) return;
-    e.stopPropagation();
     e.preventDefault();
+    e.stopPropagation();
     onFocus();
     resizeSession.current = {
       pointerId: e.pointerId,
@@ -263,19 +259,17 @@ export function Window({
       ref={frame}
       role="dialog"
       aria-label={title}
-      onMouseDown={(e) => {
-        if ((e.target as HTMLElement).closest("[data-window-titlebar]")) return;
-        if ((e.target as HTMLElement).closest("[data-resize]")) return;
+      onMouseDown={() => {
         onFocus();
       }}
       style={
         maximized
           ? {
               zIndex: Math.max(zIndex, 50),
-              top: "3rem",
+              top: "2.5rem",
               left: "0.5rem",
               right: "0.5rem",
-              bottom: "5.5rem",
+              bottom: "3.75rem",
               width: "auto",
               height: "auto",
             }
@@ -287,15 +281,25 @@ export function Window({
               height: size.h,
             }
       }
-      className={`absolute overflow-hidden border-2 border-ink bg-cream nb-shadow-lg ${
-        dragging || resizing ? "" : "os-window-enter"
-      }`}
+      className={`absolute overflow-hidden bg-[#14120f] transition-all border ${
+        isActive
+          ? "border-[#ff9e00] window-active-shadow"
+          : "border-[#332b23] window-inactive-shadow opacity-90"
+      } ${dragging || resizing ? "" : "os-window-enter"}`}
     >
+      {/* Airport Departure / ATC Instrument Window Title Bar */}
       <div
         data-window-titlebar
         onPointerDown={onTitlePointerDown}
-        onDoubleClick={onToggleMaximize}
-        className={`flex h-9 shrink-0 items-center justify-between border-b-2 border-ink bg-titlebar px-2 select-none ${
+        onDoubleClick={() => {
+          soundFx.flap();
+          onToggleMaximize();
+        }}
+        className={`flex h-8 shrink-0 items-center justify-between border-b select-none px-2.5 transition-colors font-mono ${
+          isActive
+            ? "border-[#ff9e00]/50 bg-[#1c1814] text-[#ff9e00]"
+            : "border-[#332b23] bg-[#14120f] text-[#80776d]"
+        } ${
           maximized
             ? "cursor-default"
             : dragging
@@ -304,6 +308,7 @@ export function Window({
         }`}
       >
         <div className="flex items-center gap-2">
+          {/* Action buttons: Abort (Close), Standby (Min), Flare (Max) */}
           <div
             className="flex items-center gap-1.5"
             onPointerDown={(e) => e.stopPropagation()}
@@ -313,49 +318,65 @@ export function Window({
               aria-label="Close"
               onClick={(e) => {
                 e.stopPropagation();
+                soundFx.windowClose();
                 onClose();
               }}
-              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-orange hover:text-cream active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+              className="btn-destructive flex h-4.5 w-4.5 items-center justify-center border border-[#3a3228] text-[#80776d] hover:bg-[#f97316] hover:text-white transition-colors cursor-pointer"
+              title="Close window (Abort)"
             >
-              <Close width={12} height={12} className="pixel-icon" />
+              <Close width={10} height={10} className="pixel-icon" />
             </button>
             <button
               type="button"
               aria-label="Minimize"
               onClick={(e) => {
                 e.stopPropagation();
+                soundFx.flap();
                 onClose();
               }}
-              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-yellow active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+              className="btn-secondary flex h-4.5 w-4.5 items-center justify-center border border-[#3a3228] text-[#80776d] hover:bg-[#ff9e00] hover:text-[#111111] transition-colors cursor-pointer"
+              title="Minimize window"
             >
-              <Minus width={12} height={12} className="pixel-icon" />
+              <Minus width={10} height={10} className="pixel-icon" />
             </button>
             <button
               type="button"
               aria-label="Maximize"
               onClick={(e) => {
                 e.stopPropagation();
+                soundFx.flap();
                 onToggleMaximize();
               }}
-              className="flex h-5 w-5 items-center justify-center border border-ink bg-cream hover:bg-green-soft active:translate-x-0.5 active:translate-y-0.5 transition-colors"
+              className="btn-secondary flex h-4.5 w-4.5 items-center justify-center border border-[#3a3228] text-[#80776d] hover:bg-[#22c55e] hover:text-[#111111] transition-colors cursor-pointer"
+              title="Toggle maximize"
             >
-              <Checkbox width={12} height={12} className="pixel-icon" />
+              <Checkbox width={10} height={10} className="pixel-icon" />
             </button>
           </div>
         </div>
 
-        <p className="pointer-events-none mx-2 flex-1 truncate text-center font-[family-name:var(--font-space-grotesk)] text-xs font-bold text-ink">
-          {title}
-        </p>
+        {/* Title: Solari departure board display type */}
+        <div className="flex items-center gap-2 overflow-hidden px-2">
+          <span className="text-[10px] text-[#80776d] font-bold">[{gateCode}]</span>
+          <p className="truncate text-xs font-bold tracking-wider uppercase text-[#ece5d8]">
+            {title}
+          </p>
+        </div>
 
-        <div className="w-12 text-right">
-          <span className="font-mono text-[9px] text-faint uppercase tracking-wider">
-            [UL]
+        <div className="flex items-center gap-1.5 text-right font-mono text-[9px] uppercase tracking-wider">
+          <span
+            className={`h-1.5 w-1.5 rounded-full ${
+              isActive ? "bg-[#ff9e00] beacon-hum" : "bg-[#80776d]"
+            }`}
+          />
+          <span className={isActive ? "text-[#ff9e00] font-bold" : "text-[#80776d]"}>
+            {isActive ? "ACTIVE" : "STANDBY"}
           </span>
         </div>
       </div>
 
-      <div className="h-[calc(100%-2.25rem)] overflow-y-auto overscroll-contain bg-cream p-4 md:p-5">
+      {/* Window Content Canvas */}
+      <div className="h-[calc(100%-2rem)] overflow-y-auto overscroll-contain bg-[#110f0d] p-4 sm:p-6 text-[#ece5d8]">
         {children}
       </div>
 
@@ -407,21 +428,21 @@ export function Window({
             data-resize
             data-edge="se"
             onPointerDown={onResizePointerDown}
-            className="absolute bottom-0 right-0 z-30 flex h-4 w-4 cursor-nwse-resize items-end justify-end border-l-2 border-t-2 border-ink bg-titlebar touch-none"
+            className="absolute bottom-0 right-0 z-30 flex h-4 w-4 cursor-nwse-resize items-end justify-end border-l border-t border-[#3a3228] bg-[#1c1814] touch-none"
             title="Drag to resize"
             aria-label="Resize window"
           >
             <svg
-              width="10"
-              height="10"
-              viewBox="0 0 10 10"
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
               aria-hidden
               className="m-0.5"
             >
               <path
-                d="M2 9 H9 M5 9 V5 M9 9 V2"
-                stroke="#111111"
-                strokeWidth="1.5"
+                d="M2 7 H7 M4 7 V4 M7 7 V2"
+                stroke="#ff9e00"
+                strokeWidth="1.25"
                 fill="none"
               />
             </svg>

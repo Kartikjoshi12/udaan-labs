@@ -9,6 +9,7 @@ import {
 } from "react";
 import { apps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
+import { soundFx } from "@/lib/sound";
 
 type DesktopIconsProps = {
   onOpen: (id: AppId) => void;
@@ -16,15 +17,15 @@ type DesktopIconsProps = {
 
 type Pos = { x: number; y: number };
 
-/** Left column of desktop — keep above the taskbar */
+/** Left column of flight deck — keep above the taskbar */
 const defaultPositions: Record<AppId, Pos> = {
-  about: { x: 28, y: 64 },
-  services: { x: 28, y: 168 },
-  projects: { x: 28, y: 272 },
-  process: { x: 140, y: 64 },
-  contact: { x: 140, y: 168 },
-  wallpaper: { x: 140, y: 272 },
-  tictactoe: { x: 140, y: 376 },
+  about: { x: 28, y: 56 },
+  projects: { x: 28, y: 160 },
+  services: { x: 28, y: 264 },
+  process: { x: 140, y: 56 },
+  contact: { x: 140, y: 160 },
+  wallpaper: { x: 140, y: 264 },
+  tictactoe: { x: 140, y: 368 },
 };
 
 const DRAG_THRESHOLD = 6;
@@ -57,7 +58,7 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
         setDraggingId(s.id);
       }
       const nextX = Math.max(8, Math.min(window.innerWidth - 120, s.originX + dx));
-      const nextY = Math.max(56, Math.min(window.innerHeight - 150, s.originY + dy));
+      const nextY = Math.max(50, Math.min(window.innerHeight - 140, s.originY + dy));
       setPositions((prev) => ({ ...prev, [s.id]: { x: nextX, y: nextY } }));
     }
 
@@ -69,7 +70,10 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
       session.current = null;
       setDraggingId(null);
       document.body.style.userSelect = "";
-      if (!wasDrag) onOpen(id);
+      if (!wasDrag) {
+        soundFx.windowOpen();
+        onOpen(id);
+      }
     }
 
     window.addEventListener("pointermove", onMove);
@@ -87,6 +91,7 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
       if (e.button !== 0) return;
       e.preventDefault();
       e.stopPropagation();
+      soundFx.flap();
       const p = positionsRef.current[id];
       session.current = {
         id,
@@ -113,18 +118,29 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
             type="button"
             style={{ left: p.x, top: p.y, zIndex: isDragging ? 70 : 20 }}
             onPointerDown={(e) => onPointerDown(app.id, e)}
-            className={`pointer-events-auto absolute flex w-[90px] flex-col items-center gap-1.5 p-1 text-center focus:outline-none group ${
-              isDragging ? "cursor-grabbing opacity-90 scale-105" : "cursor-grab"
+            className={`pointer-events-auto absolute flex w-[96px] flex-col items-center gap-1.5 p-1 text-center focus:outline-none group ${
+              isDragging ? "cursor-grabbing opacity-90 scale-105" : "cursor-pointer"
             }`}
-            title="Drag to move · click to open"
+            title="Drag to position · Click to open"
           >
+            {/* Flight Module / Split Flap Icon Tile */}
             <span
-              className="pointer-events-none icon-tile flex h-14 w-14 items-center justify-center bg-paper relative group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+              className="pointer-events-none icon-tile flex h-13 w-13 items-center justify-center relative group-hover:-translate-y-0.5 transition-all split-flap-module"
               style={{ backgroundColor: app.fill }}
             >
-              <IconArt id={app.id} size={30} />
+              <IconArt
+                id={app.id}
+                size={24}
+                className="text-[#ece5d8] group-hover:text-[#ff9e00] transition-colors"
+              />
+              <span
+                className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full beacon-hum"
+                style={{ backgroundColor: app.accent }}
+              />
             </span>
-            <span className="pointer-events-none max-w-[88px] truncate border border-ink bg-cream px-1.5 py-0.5 font-mono text-[11px] font-semibold text-ink shadow-[2px_2px_0_0_#111111]">
+
+            {/* Flight App Label */}
+            <span className="pointer-events-none max-w-[92px] truncate border border-[#332b23] bg-[#14120f]/95 px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#ece5d8] group-hover:border-[#ff9e00]/60 group-hover:text-[#ff9e00] transition-colors shadow-md">
               {app.label}
             </span>
           </button>

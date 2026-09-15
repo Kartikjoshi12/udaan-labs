@@ -1,92 +1,99 @@
 "use client";
 
 import { useWallpaper } from "./WallpaperContext";
-import { Check } from "pixelarticons/react";
+import { soundFx } from "@/lib/sound";
 
 export function WallpaperWindow() {
   const { wallpapers, current, setWallpaper } = useWallpaper();
 
   return (
-    <div className="space-y-5">
-      <div className="border-b-2 border-ink pb-3 mb-4 flex items-baseline justify-between">
+    <div className="space-y-5 font-mono">
+      <div className="border-b border-[#332b23] pb-3 mb-4 flex items-baseline justify-between">
         <div className="flex items-baseline gap-2">
-          <span className="font-mono text-xs font-bold text-orange">[06]</span>
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold tracking-tight text-ink">
-            Studio Backgrounds
+          <span className="text-xs font-bold text-[#ff9e00]">[06_RADAR]</span>
+          <h2 className="text-2xl font-bold tracking-tight text-[#f4ede2] uppercase">
+            Radar & Display Canvases
           </h2>
         </div>
-        <span className="font-mono text-[10px] text-muted uppercase tracking-wider">
-          TACTILE WORKSPACE CANVAS
+        <span className="text-[10px] text-[#80776d] uppercase tracking-wider">
+          AERODROME SCOPE FEEDS
         </span>
       </div>
 
-      <p className="text-xs sm:text-sm text-muted">
-        Choose an ambient backdrop for the Udaan digital workshop. Selected wallpaper is preserved locally.
+      <p className="text-xs sm:text-sm text-[#c2b8a8] leading-relaxed">
+        Select an ambient aerodrome radar or departure display feed for the cockpit background. Each canvas renders real-time procedural vectors, scanlines, and flight telemetry grids.
       </p>
 
       {/* Preset options */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {/* Architectural drafting canvas (Default) */}
-        <button
-          type="button"
-          onClick={() => setWallpaper("")}
-          className={`group flex flex-col text-left border-2 border-ink p-2.5 transition-all ${
-            !current ? "bg-yellow nb-shadow" : "bg-paper hover:bg-cream"
-          }`}
-        >
-          <div className="relative h-28 w-full border-2 border-ink bg-[#f7f4ed] overflow-hidden flex items-center justify-center">
-            <div className="text-[10px] font-mono text-faint font-semibold tracking-widest uppercase">
-              GRID // DRAFTING
-            </div>
-            {!current && (
-              <span className="absolute top-1.5 right-1.5 bg-ink text-cream p-0.5">
-                <Check width={12} height={12} className="pixel-icon" />
-              </span>
-            )}
-          </div>
-          <div className="mt-2 flex items-center justify-between font-mono text-xs">
-            <span className="font-bold text-ink">Architectural Canvas</span>
-            <span className="text-[10px] text-faint">DEFAULT</span>
-          </div>
-        </button>
-
-        {wallpapers.map((wp, idx) => {
-          const isSelected = current === wp;
-          const name = wp.split("/").pop()?.replace(/\.[^/.]+$/, "") ?? `Wall ${idx + 1}`;
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {wallpapers.map((wp) => {
+          const isSelected = current === wp.id;
           return (
             <button
-              key={wp}
+              key={wp.id}
               type="button"
-              onClick={() => setWallpaper(wp)}
-              className={`group flex flex-col text-left border-2 border-ink p-2.5 transition-all ${
-                isSelected ? "bg-yellow nb-shadow" : "bg-paper hover:bg-cream"
+              onClick={() => {
+                soundFx.flap();
+                setWallpaper(wp.id);
+              }}
+              className={`group flex flex-col text-left p-3 transition-all cursor-pointer border ${
+                isSelected
+                  ? "border-[#ff9e00] bg-[#1a1713] window-active-shadow"
+                  : "border-[#332b23] bg-[#14120f] hover:border-[#ff9e00]/40 hover:bg-[#181512]"
               }`}
             >
-              <div className="relative h-28 w-full border-2 border-ink bg-paper-2 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={wp}
-                  alt={name}
-                  className="h-full w-full object-cover"
-                />
+              <div className="relative h-28 w-full border border-[#2a241e] overflow-hidden flex items-center justify-center bg-[#0c0a08]">
+                {wp.id === "departure-board" && (
+                  <div className="h-full w-full bg-[#110f0d] flex items-center justify-center p-3">
+                    <span className="text-[9px] text-[#ff9e00] opacity-80 text-center font-bold">
+                      ✈ SOLARI SPLIT-FLAP<br />MAIN CONCOURSE FIDS
+                    </span>
+                  </div>
+                )}
+                {wp.id === "radar-scope" && (
+                  <div className="h-full w-full bg-[#0a0f0d] flex items-center justify-center p-3">
+                    <span className="text-[9px] text-[#22c55e] text-center font-bold">
+                      ◎ PRIMARY RADAR 360°<br />APPROACH DEL / BLR
+                    </span>
+                  </div>
+                )}
+                {wp.id === "runway-lighting" && (
+                  <div className="h-full w-full bg-[#0d0d0c] flex items-center justify-center p-3">
+                    <span className="text-[9px] text-[#ff9e00] text-center font-bold">
+                      || RUNWAY 09/27 CAT-III<br />THRESHOLD LIGHTS
+                    </span>
+                  </div>
+                )}
+                {wp.id === "flight-strip" && (
+                  <div className="h-full w-full bg-[#f4ede2] flex items-center justify-center p-3">
+                    <span className="text-[9px] text-[#111111] text-center font-bold">
+                      [≡] FLIGHT PROGRESS BAY<br />MANILA TOWER STRIPS
+                    </span>
+                  </div>
+                )}
+
                 {isSelected && (
-                  <span className="absolute top-1.5 right-1.5 bg-ink text-cream p-0.5">
-                    <Check width={12} height={12} className="pixel-icon" />
+                  <span className="absolute top-2 right-2 bg-[#ff9e00] text-[#111111] px-1.5 py-0.5 text-[9px] font-bold tracking-wider">
+                    LOCKED
                   </span>
                 )}
               </div>
-              <div className="mt-2 flex items-center justify-between font-mono text-xs">
-                <span className="font-bold text-ink truncate">{name}</span>
-                <span className="text-[10px] text-faint">IMG_{idx + 1}</span>
+
+              <div className="mt-2.5 flex items-center justify-between text-xs">
+                <span className="font-bold text-[#f4ede2]">{wp.name}</span>
+                <span className="text-[10px] text-[#80776d]">[{wp.category}]</span>
               </div>
+              <p className="mt-1 text-[11px] text-[#80776d] line-clamp-2 leading-normal">
+                {wp.description}
+              </p>
             </button>
           );
         })}
       </div>
 
-      <div className="border border-ink/20 bg-cream p-3 font-mono text-[11px] text-muted flex items-center justify-between">
-        <span>Active display mode: {current ? "Custom Wallpaper" : "Warm Paper Dot-Matrix"}</span>
-        <span className="text-[10px] text-faint">PERSISTED IN LOCALSTORAGE</span>
+      <div className="border border-[#2a241e] bg-[#14120f] p-3 text-[11px] text-[#80776d] flex items-center justify-between">
+        <span>Active display mode: <strong className="text-[#ff9e00]">{wallpapers.find((w) => w.id === current)?.name}</strong></span>
+        <span className="text-[10px] text-[#80776d]">PERSISTED IN LOCALSTORAGE</span>
       </div>
     </div>
   );
