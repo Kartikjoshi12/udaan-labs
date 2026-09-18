@@ -3,6 +3,7 @@
 import { site } from "@/lib/site";
 import { apps, dockApps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
+import { WallpaperBg } from "./WallpaperBg";
 
 type MobileHomeProps = {
   clock: string;
@@ -13,8 +14,10 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
   const dock = apps.filter((a) => dockApps.includes(a.id));
 
   return (
-    <div className="relative z-[1] flex h-full flex-col text-ink bg-[#f7f4ed]">
-      <div className="flex items-center justify-between border-b-2 border-ink bg-paper px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] font-mono text-xs">
+    <div className="relative z-[1] flex h-full flex-col text-ink bg-transparent overflow-hidden">
+      <WallpaperBg />
+
+      <div className="relative z-10 flex items-center justify-between border-b-2 border-ink bg-paper px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))] font-mono text-xs">
         <span className="tabular-nums font-semibold">{clock || "09:41"}</span>
         <span className="font-bold tracking-tight">{site.name}</span>
         <span className="text-[10px] text-green font-bold flex items-center gap-1">

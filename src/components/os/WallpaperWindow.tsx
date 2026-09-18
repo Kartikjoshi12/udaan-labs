@@ -25,28 +25,32 @@ export function WallpaperWindow() {
       </p>
 
       {/* Preset options */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {/* Architectural drafting canvas (Default) */}
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        {/* Interactive Live Matrix Canvas */}
         <button
           type="button"
           onClick={() => setWallpaper("")}
           className={`group flex flex-col text-left border-2 border-ink p-2.5 transition-all ${
-            !current ? "bg-yellow nb-shadow" : "bg-paper hover:bg-cream"
+            !current || current === "live-canvas" ? "bg-yellow nb-shadow" : "bg-paper hover:bg-cream"
           }`}
         >
-          <div className="relative h-28 w-full border-2 border-ink bg-[#f7f4ed] overflow-hidden flex items-center justify-center">
-            <div className="text-[10px] font-mono text-faint font-semibold tracking-widest uppercase">
-              GRID // DRAFTING
+          <div className="relative h-28 w-full border-2 border-ink bg-[#f7f4ed] overflow-hidden flex flex-col items-center justify-center p-2 text-center">
+            <span className="h-2 w-2 rounded-full bg-green animate-ping mb-1" />
+            <div className="text-[10px] font-mono text-ink font-bold tracking-widest uppercase">
+              LIVE MATRIX
             </div>
-            {!current && (
+            <div className="text-[9px] font-mono text-muted">
+              Interactive Waves + Particles
+            </div>
+            {(!current || current === "live-canvas") && (
               <span className="absolute top-1.5 right-1.5 bg-ink text-cream p-0.5">
                 <Check width={12} height={12} className="pixel-icon" />
               </span>
             )}
           </div>
           <div className="mt-2 flex items-center justify-between font-mono text-xs">
-            <span className="font-bold text-ink">Architectural Canvas</span>
-            <span className="text-[10px] text-faint">DEFAULT</span>
+            <span className="font-bold text-ink">Live Interactive Canvas</span>
+            <span className="text-[9px] bg-green text-cream px-1 border border-ink">LIVE</span>
           </div>
         </button>
 

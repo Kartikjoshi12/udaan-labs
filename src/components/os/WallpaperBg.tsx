@@ -2,15 +2,16 @@
 
 import { useEffect } from "react";
 import { useWallpaper } from "./WallpaperContext";
+import { LiveMatrixCanvas } from "./LiveMatrixCanvas";
 
 /**
- * Full-quality wallpaper — instant from known list, preloaded.
+ * Full-quality wallpaper — instant from known list, or interactive live canvas.
  */
 export function WallpaperBg() {
   const { current } = useWallpaper();
 
   useEffect(() => {
-    if (!current) return;
+    if (!current || current === "live-canvas") return;
     const link = document.createElement("link");
     link.rel = "preload";
     link.as = "image";
@@ -21,7 +22,9 @@ export function WallpaperBg() {
     };
   }, [current]);
 
-  if (!current) return null;
+  if (!current || current === "live-canvas") {
+    return <LiveMatrixCanvas />;
+  }
 
   return (
     <div

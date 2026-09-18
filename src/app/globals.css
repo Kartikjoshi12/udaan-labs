@@ -217,3 +217,19 @@ body {
     transform: translateY(0);
   }
 }
+
+@keyframes ping-spark {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.animate-ping-spark {
+  animation: ping-spark 450ms ease-out forwards;
+}
+

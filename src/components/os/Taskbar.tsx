@@ -5,6 +5,8 @@ import { site } from "@/lib/site";
 import { apps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
 
+import { soundManager } from "@/lib/sound";
+
 type TaskbarProps = {
   openApps: AppId[];
   activeApp: AppId | null;
@@ -28,7 +30,10 @@ export function Taskbar({
         {/* Launcher button */}
         <button
           type="button"
-          onClick={onToggleStart}
+          onClick={() => {
+            soundManager.playClick();
+            onToggleStart();
+          }}
           className="nb-btn relative flex h-9 items-center gap-2 border-2 border-ink px-3 text-xs font-mono font-bold tracking-tight"
           style={{
             background: startOpen ? "#f7c948" : "#111111",
@@ -42,7 +47,7 @@ export function Taskbar({
         <div className="h-6 w-[2px] bg-ink/30" />
 
         {/* Running & Available Apps Dock */}
-        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto py-0.5">
+        <div className="flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto py-0.5">
           {apps.map((app) => {
             const isOpen = openApps.includes(app.id);
             const isActive = activeApp === app.id;
@@ -52,23 +57,29 @@ export function Taskbar({
                 type="button"
                 onClick={() => onOpen(app.id)}
                 title={`${app.label} (${app.code})`}
-                className={`nb-btn relative flex h-9 items-center gap-2 border-2 border-ink px-2.5 text-xs font-mono transition-all ${
+                className={`group relative flex h-9 w-9 shrink-0 items-center justify-center border-2 border-ink transition-all ${
                   isActive
-                    ? "bg-yellow font-bold text-ink shadow-[1px_1px_0_0_#111111] translate-x-[1px] translate-y-[1px]"
+                    ? "bg-yellow text-ink shadow-[1px_1px_0_0_#111111] translate-x-[1px] translate-y-[1px]"
                     : isOpen
-                      ? "bg-cream text-ink"
-                      : "bg-paper-2/80 text-muted opacity-85 hover:opacity-100"
+                      ? "bg-cream text-ink shadow-[2px_2px_0_0_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5"
+                      : "bg-paper-2/80 text-muted opacity-80 hover:opacity-100 shadow-[2px_2px_0_0_#111111] hover:-translate-x-0.5 hover:-translate-y-0.5"
                 }`}
               >
-                <IconArt id={app.id} size={16} />
-                <span className="hidden sm:inline-block text-[11px] font-semibold">{app.label}</span>
+                <IconArt id={app.id} size={18} />
+
+                {/* Open status indicator dot */}
                 {isOpen && (
                   <span
-                    className={`inline-block h-1.5 w-1.5 rounded-full border border-ink ${
-                      isActive ? "bg-green" : "bg-ink/40"
+                    className={`absolute bottom-0.5 h-1 w-2 rounded-sm border border-ink ${
+                      isActive ? "bg-green" : "bg-ink"
                     }`}
                   />
                 )}
+
+                {/* Tooltip on hover */}
+                <span className="pointer-events-none absolute bottom-full mb-2 hidden -translate-x-1/2 left-1/2 whitespace-nowrap border border-ink bg-paper px-2 py-0.5 font-mono text-[10px] font-bold text-ink shadow-[2px_2px_0_0_#111111] group-hover:flex z-50">
+                  {app.label}
+                </span>
               </button>
             );
           })}
