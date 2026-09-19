@@ -4,6 +4,7 @@ import { site } from "@/lib/site";
 import { apps, dockApps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
 import { WallpaperBg } from "./WallpaperBg";
+import { DesktopPet } from "./DesktopPet";
 
 type MobileHomeProps = {
   clock: string;
@@ -67,7 +68,9 @@ export function MobileHome({ clock, onOpen }: MobileHomeProps) {
         ))}
       </div>
 
-      <div className="mt-auto" />
+      <div className="mt-auto relative">
+        <DesktopPet />
+      </div>
 
       <div className="relative z-[2] border-t-2 border-ink bg-paper px-3 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex max-w-sm items-center justify-around gap-2">

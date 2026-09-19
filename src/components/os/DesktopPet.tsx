@@ -13,20 +13,27 @@ const SPEECHES = [
 ];
 
 export function DesktopPet() {
-  const [x, setX] = useState(300);
+  const [x, setX] = useState(120);
   const [dir, setDir] = useState<1 | -1>(1);
   const [speech, setSpeech] = useState<string | null>(null);
   const [mood, setMood] = useState<"happy" | "sleepy" | "curious">("happy");
   const [clicks, setClicks] = useState(0);
 
-  // Wander along the bottom of the screen above taskbar
+  // Initialize inside screen boundaries
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setX(Math.min(180, Math.max(30, window.innerWidth / 2 - 20)));
+    }
+  }, []);
+
+  // Wander along the bottom of the screen above taskbar/dock
   useEffect(() => {
     const interval = window.setInterval(() => {
       if (Math.random() > 0.4) {
         setX((prev) => {
-          const max = window.innerWidth - 140;
-          const min = 40;
-          let next = prev + dir * (15 + Math.random() * 25);
+          const max = Math.max(120, window.innerWidth - 64);
+          const min = 20;
+          let next = prev + dir * (12 + Math.random() * 20);
           if (next >= max) {
             setDir(-1);
             next = max;
