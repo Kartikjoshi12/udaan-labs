@@ -14,6 +14,16 @@ interface CommandPaletteProps {
   soundActive?: boolean;
 }
 
+const appDescriptions: Record<AppId, string> = {
+  about: "Studio Overview, values, ethos & core team",
+  projects: "Selected production apps, client case studies",
+  services: "Full-stack development, mobile apps & engineering",
+  process: "4-phase delivery system & weekly sprints",
+  contact: "Direct contact, email & start a new project",
+  wallpaper: "Customize workspace canvas & live backdrops",
+  tictactoe: "Interactive 8-bit desktop mini-game",
+};
+
 export function CommandPalette({
   isOpen,
   onClose,
@@ -27,7 +37,7 @@ export function CommandPalette({
   const filteredApps = apps.filter((a) =>
     a.label.toLowerCase().includes(query.toLowerCase()) ||
     a.code.toLowerCase().includes(query.toLowerCase()) ||
-    a.description.toLowerCase().includes(query.toLowerCase())
+    (appDescriptions[a.id] ?? "").toLowerCase().includes(query.toLowerCase())
   );
 
   useEffect(() => {
@@ -154,7 +164,7 @@ export function CommandPalette({
                         </span>
                       </div>
                       <p className="text-[10px] text-muted font-normal truncate max-w-xs">
-                        {app.description}
+                        {appDescriptions[app.id] ?? "Studio Application"}
                       </p>
                     </div>
                   </div>
