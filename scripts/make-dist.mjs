@@ -11,5 +11,6 @@ if (!fs.existsSync(outDir)) {
 }
 
 fs.rmSync(distDir, { recursive: true, force: true });
-fs.renameSync(outDir, distDir);
+fs.cpSync(outDir, distDir, { recursive: true });
+fs.rmSync(outDir, { recursive: true, force: true });
 console.log("Wrote dist/ from static export.");

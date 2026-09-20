@@ -12,8 +12,8 @@ const SPEECHES = [
   "Ship software fast 🚀",
 ];
 
-export function DesktopPet() {
-  const [x, setX] = useState(120);
+export function DesktopPet({ isMobile = false }: { isMobile?: boolean }) {
+  const [x, setX] = useState(60);
   const [dir, setDir] = useState<1 | -1>(1);
   const [speech, setSpeech] = useState<string | null>(null);
   const [mood, setMood] = useState<"happy" | "sleepy" | "curious">("happy");
@@ -68,7 +68,9 @@ export function DesktopPet() {
   return (
     <div
       style={{ left: x }}
-      className="absolute bottom-12 z-30 transition-all duration-1000 ease-out select-none pointer-events-auto"
+      className={`absolute ${
+        isMobile ? "bottom-20" : "bottom-12"
+      } z-30 transition-all duration-1000 ease-out select-none pointer-events-auto`}
     >
       {/* Speech bubble */}
       {speech && (

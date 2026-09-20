@@ -19,6 +19,7 @@ const appDescriptions: Record<AppId, string> = {
   projects: "Selected production apps, client case studies",
   services: "Full-stack development, mobile apps & engineering",
   process: "4-phase delivery system & weekly sprints",
+  terminal: "Hacker CLI console with custom studio commands",
   contact: "Direct contact, email & start a new project",
   wallpaper: "Customize workspace canvas & live backdrops",
   tictactoe: "Interactive 8-bit desktop mini-game",

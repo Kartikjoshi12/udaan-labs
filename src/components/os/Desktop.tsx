@@ -26,6 +26,7 @@ const titles: Record<AppId, string> = {
   contact: "Start a Project",
   wallpaper: "Studio Backgrounds",
   tictactoe: "Tic Tac Toe",
+  terminal: "Studio Terminal CLI",
 };
 
 interface WindowSpec {
@@ -40,70 +41,72 @@ interface WindowSpec {
 }
 
 const windowSpecs: Record<AppId, WindowSpec> = {
-  about: { wRatio: 0.62, hRatio: 0.68, minW: 560, maxW: 960, minH: 420, maxH: 640, offsetX: 0, offsetY: 0 },
-  projects: { wRatio: 0.66, hRatio: 0.70, minW: 580, maxW: 1040, minH: 440, maxH: 680, offsetX: 24, offsetY: 12 },
-  services: { wRatio: 0.62, hRatio: 0.68, minW: 560, maxW: 940, minH: 420, maxH: 620, offsetX: 40, offsetY: 20 },
-  process: { wRatio: 0.60, hRatio: 0.66, minW: 540, maxW: 900, minH: 400, maxH: 600, offsetX: 56, offsetY: 28 },
-  contact: { wRatio: 0.58, hRatio: 0.66, minW: 520, maxW: 880, minH: 400, maxH: 600, offsetX: 30, offsetY: 16 },
-  wallpaper: { wRatio: 0.56, hRatio: 0.62, minW: 500, maxW: 820, minH: 380, maxH: 560, offsetX: 48, offsetY: 24 },
-  tictactoe: { wRatio: 0.32, hRatio: 0.62, minW: 360, maxW: 460, minH: 460, maxH: 560, offsetX: 120, offsetY: 30 },
+  about: { wRatio: 0.74, hRatio: 0.76, minW: 680, maxW: 1140, minH: 460, maxH: 720, offsetX: 0, offsetY: 0 },
+  projects: { wRatio: 0.78, hRatio: 0.78, minW: 720, maxW: 1220, minH: 480, maxH: 760, offsetX: 20, offsetY: 10 },
+  services: { wRatio: 0.74, hRatio: 0.76, minW: 680, maxW: 1140, minH: 460, maxH: 720, offsetX: 36, offsetY: 16 },
+  process: { wRatio: 0.72, hRatio: 0.74, minW: 660, maxW: 1100, minH: 450, maxH: 700, offsetX: 48, offsetY: 22 },
+  terminal: { wRatio: 0.68, hRatio: 0.68, minW: 580, maxW: 980, minH: 400, maxH: 620, offsetX: 40, offsetY: 18 },
+  contact: { wRatio: 0.70, hRatio: 0.74, minW: 640, maxW: 1060, minH: 440, maxH: 680, offsetX: 24, offsetY: 12 },
+  wallpaper: { wRatio: 0.68, hRatio: 0.70, minW: 620, maxW: 1020, minH: 420, maxH: 640, offsetX: 36, offsetY: 18 },
+  tictactoe: { wRatio: 0.36, hRatio: 0.68, minW: 380, maxW: 480, minH: 480, maxH: 580, offsetX: 90, offsetY: 20 },
 };
 
 /** Gutter reserved on the left for the 2 columns of desktop icons */
-const LEFT_ICON_GUTTER = 260;
+const LEFT_ICON_GUTTER = 250;
 const TOP_MENU_BAR = 48;
 const BOTTOM_TASKBAR = 72;
 
 /** Static fallback positions used on SSR and initial hydration so server matches client */
 const fallbackPos: Record<AppId, { x: number; y: number; w: number; h: number }> = {
-  about: { x: 270, y: 54, w: 780, h: 520 },
-  projects: { x: 300, y: 54, w: 840, h: 540 },
-  services: { x: 310, y: 58, w: 780, h: 500 },
-  process: { x: 320, y: 62, w: 760, h: 500 },
-  contact: { x: 300, y: 54, w: 740, h: 480 },
-  wallpaper: { x: 310, y: 58, w: 700, h: 460 },
-  tictactoe: { x: 380, y: 64, w: 400, h: 500 },
+  about: { x: 260, y: 54, w: 920, h: 580 },
+  projects: { x: 280, y: 54, w: 980, h: 600 },
+  services: { x: 290, y: 58, w: 920, h: 560 },
+  process: { x: 300, y: 62, w: 900, h: 560 },
+  terminal: { x: 295, y: 60, w: 820, h: 520 },
+  contact: { x: 280, y: 54, w: 880, h: 540 },
+  wallpaper: { x: 290, y: 58, w: 840, h: 520 },
+  tictactoe: { x: 360, y: 64, w: 420, h: 520 },
 };
 
 function getResponsiveWindowMetrics(id: AppId, isMounted: boolean) {
   if (!isMounted || typeof window === "undefined") {
-    return fallbackPos[id] || { x: 270, y: 54, w: 780, h: 520 };
+    return fallbackPos[id] || { x: 220, y: 54, w: 920, h: 580 };
   }
 
   const spec = windowSpecs[id] || {
-    wRatio: 0.6,
-    hRatio: 0.65,
-    minW: 500,
-    maxW: 900,
-    minH: 400,
-    maxH: 600,
+    wRatio: 0.72,
+    hRatio: 0.75,
+    minW: 650,
+    maxW: 1100,
+    minH: 450,
+    maxH: 700,
     offsetX: 0,
     offsetY: 0,
   };
 
-  const availableW = window.innerWidth - LEFT_ICON_GUTTER - 24; // leave margin on right
-  const availableH = window.innerHeight - TOP_MENU_BAR - BOTTOM_TASKBAR - 20;
+  const availableW = window.innerWidth - LEFT_ICON_GUTTER - 16; // leave margin on right
+  const availableH = window.innerHeight - TOP_MENU_BAR - BOTTOM_TASKBAR - 16;
 
-  // Calculate proportional width & height
+  // Calculate proportional width & height with wide editorial balance
   let w = Math.round(window.innerWidth * spec.wRatio);
   let h = Math.round(window.innerHeight * spec.hRatio);
 
   // Apply constraints
   if (spec.maxW) w = Math.min(w, spec.maxW);
   if (spec.minW) w = Math.max(w, spec.minW);
-  w = Math.min(w, Math.max(300, availableW));
+  w = Math.min(w, Math.max(320, availableW));
 
   if (spec.maxH) h = Math.min(h, spec.maxH);
   if (spec.minH) h = Math.max(h, spec.minH);
-  h = Math.min(h, Math.max(240, availableH));
+  h = Math.min(h, Math.max(260, availableH));
 
-  // Position: start after desktop icons gutter, slightly cascade with offset
+  // Position: start right after desktop icons gutter
   const baseX = LEFT_ICON_GUTTER + (spec.offsetX ?? 0);
   const baseY = TOP_MENU_BAR + 6 + (spec.offsetY ?? 0);
 
   // Clamp within viewport
-  const maxX = Math.max(LEFT_ICON_GUTTER, window.innerWidth - w - 16);
-  const maxY = Math.max(TOP_MENU_BAR, window.innerHeight - h - BOTTOM_TASKBAR - 8);
+  const maxX = Math.max(LEFT_ICON_GUTTER, window.innerWidth - w - 12);
+  const maxY = Math.max(TOP_MENU_BAR, window.innerHeight - h - BOTTOM_TASKBAR - 6);
 
   const x = Math.min(maxX, Math.max(LEFT_ICON_GUTTER, baseX));
   const y = Math.min(maxY, Math.max(TOP_MENU_BAR, baseY));
@@ -206,7 +209,14 @@ export function Desktop() {
   return (
     <div className="os-wallpaper relative h-[100dvh] w-full overflow-hidden text-ink">
       <div className="absolute inset-0 z-[1] md:hidden">
-        <MobileHome clock={clock} onOpen={openApp} />
+        <MobileHome
+          clock={clock}
+          onOpen={openApp}
+          onOpenSearch={() => {
+            soundManager.playClick();
+            setCmdOpen(true);
+          }}
+        />
         {mobileApp && (
           <MobileApp
             id={mobileApp}

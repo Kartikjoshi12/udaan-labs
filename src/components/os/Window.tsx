@@ -355,7 +355,7 @@ export function Window({
         </div>
       </div>
 
-      <div className="h-[calc(100%-2.25rem)] overflow-y-auto overscroll-contain bg-cream p-4 md:p-5">
+      <div className="h-[calc(100%-2.25rem)] overflow-y-auto overscroll-contain bg-cream p-4 sm:p-5 md:p-6 space-y-6">
         {children}
       </div>
 

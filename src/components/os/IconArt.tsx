@@ -6,6 +6,7 @@ import {
   Laptop,
   Mail,
   Reload,
+  Terminal,
 } from "pixelarticons/react";
 import type { AppId } from "./apps";
 
@@ -17,6 +18,7 @@ const icons = {
   contact: Mail,
   wallpaper: ImageIcon,
   tictactoe: Gamepad,
+  terminal: Terminal,
 } as const;
 
 /** Pixelarticons (MIT) — crisp 24-grid pixel icons */
@@ -29,6 +31,18 @@ export function IconArt({
   size?: number;
   className?: string;
 }) {
+  if (id === "terminal") {
+    return (
+      <span
+        style={{ width: size, height: size, fontSize: Math.round(size * 0.52) }}
+        className={`flex items-center justify-center font-mono font-black text-ink select-none tracking-tighter ${className}`}
+        aria-hidden
+      >
+        &gt;<span className="text-green font-extrabold animate-pulse">_</span>
+      </span>
+    );
+  }
+
   const Icon = icons[id];
   return (
     <Icon

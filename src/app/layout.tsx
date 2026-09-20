@@ -16,8 +16,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — apps & websites`,
-  description: site.description,
+  title: "Udaan Labs | Custom Software Development Studio in India",
+  description:
+    "Udaan Labs is an independent software development studio in India building custom web apps, mobile apps, internal tools, MVPs and digital solutions for businesses and startups.",
 };
 
 export const viewport: Viewport = {

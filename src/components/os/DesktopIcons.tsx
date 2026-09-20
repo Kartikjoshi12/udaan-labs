@@ -19,9 +19,10 @@ type Pos = { x: number; y: number };
 /** Left column of desktop — keep above the taskbar */
 const defaultPositions: Record<AppId, Pos> = {
   about: { x: 28, y: 64 },
-  services: { x: 28, y: 168 },
-  projects: { x: 28, y: 272 },
-  process: { x: 140, y: 64 },
+  projects: { x: 28, y: 168 },
+  services: { x: 28, y: 272 },
+  process: { x: 28, y: 376 },
+  terminal: { x: 140, y: 64 },
   contact: { x: 140, y: 168 },
   wallpaper: { x: 140, y: 272 },
   tictactoe: { x: 140, y: 376 },
