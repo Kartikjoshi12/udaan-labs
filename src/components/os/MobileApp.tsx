@@ -40,7 +40,11 @@ export function MobileApp({ id, clock, onClose, children }: MobileAppProps) {
         <span className="w-14" aria-hidden />
       </div>
 
-      <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <div
+        className={`flex-1 overflow-y-auto overscroll-contain ${
+          id === "terminal" ? "p-0 flex flex-col bg-[#111111]" : "px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+        }`}
+      >
         {children}
       </div>
     </div>
