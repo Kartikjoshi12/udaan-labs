@@ -114,18 +114,18 @@ export function DesktopIcons({ onOpen }: DesktopIconsProps) {
             type="button"
             style={{ left: p.x, top: p.y, zIndex: isDragging ? 70 : 20 }}
             onPointerDown={(e) => onPointerDown(app.id, e)}
-            className={`pointer-events-auto absolute flex w-[90px] flex-col items-center gap-1.5 p-1 text-center focus:outline-none group ${
-              isDragging ? "cursor-grabbing opacity-90 scale-105" : "cursor-grab"
+            className={`pointer-events-auto absolute flex w-[72px] flex-col items-center gap-1 p-1 text-center focus:outline-none group ${
+              isDragging ? "cursor-grabbing opacity-90" : "cursor-grab"
             }`}
             title="Drag to move · click to open"
           >
             <span
-              className="pointer-events-none icon-tile flex h-14 w-14 items-center justify-center bg-paper relative group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+              className="pointer-events-none icon-tile flex h-10 w-10 items-center justify-center bg-paper relative"
               style={{ backgroundColor: app.fill }}
             >
-              <IconArt id={app.id} size={30} />
+              <IconArt id={app.id} size={20} />
             </span>
-            <span className="pointer-events-none max-w-[88px] truncate border border-ink bg-cream px-1.5 py-0.5 font-mono text-[11px] font-semibold text-ink shadow-[2px_2px_0_0_#111111]">
+            <span className="pointer-events-none max-w-[72px] truncate font-mono text-[10px] font-medium text-muted">
               {app.label}
             </span>
           </button>

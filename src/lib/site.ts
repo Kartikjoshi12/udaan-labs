@@ -1,5 +1,6 @@
 export const site = {
   name: "Udaan Labs",
+  url: "https://udaanlabs.com",
   tagline: "We build digital solutions, not just apps and websites.",
   description:
     "Udaan Labs is an independent software development studio in India building custom web apps, mobile apps, internal tools, MVPs and digital solutions for businesses and startups.",
@@ -10,6 +11,7 @@ export const site = {
       "Udaan Labs is an independent software development studio building custom web apps, mobile apps, internal tools and MVPs for businesses and startups — from idea to production.",
     positioning:
       "We turn ideas, workflows, and business problems into working software.",
+    sheet: "Custom web apps, mobile apps, and internal tools.",
     primaryCta: { label: "Start a project", href: "#contact" },
     secondaryCta: { label: "See our work", href: "#projects" },
   },

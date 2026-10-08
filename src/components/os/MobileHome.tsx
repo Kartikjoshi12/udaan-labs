@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { site } from "@/lib/site";
 import { apps, dockApps, type AppId } from "./apps";
 import { IconArt } from "./IconArt";
@@ -53,21 +54,21 @@ export function MobileHome({
                 AVAILABLE FOR WORK
               </span>
             </div>
-            <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight tracking-tight uppercase text-ink">
-              {site.tagline}
-            </h1>
-            <p className="mt-1.5 font-mono text-[11px] text-muted">
-              Independent software studio · Custom web, mobile, and digital solutions.
+            <p className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight tracking-tight text-ink">
+              {site.hero.sheet}
             </p>
           </div>
 
           <div className="mx-auto mt-4 grid w-full max-w-sm grid-cols-4 gap-x-2 gap-y-3 px-1">
-            {apps.map((app) => (
-              <button
+            {apps.map((app, index) => (
+              <motion.button
                 key={app.id}
                 type="button"
                 onClick={() => onOpen(app.id)}
-                className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.04 * index, type: "spring", bounce: 0.2, visualDuration: 0.3 }}
+                className="flex flex-col items-center gap-1 group active:scale-95"
               >
                 <div className="relative">
                   <span
@@ -83,7 +84,7 @@ export function MobileHome({
                 <span className="max-w-[4.4rem] truncate border border-ink bg-cream px-1 py-0.5 font-mono text-[9px] font-bold shadow-[1px_1px_0_0_#111111]">
                   {app.label}
                 </span>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>

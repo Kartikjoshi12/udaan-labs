@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { motion } from "motion/react";
 import { apps, type AppId } from "./apps";
 
 type MobileAppProps = {
@@ -14,7 +15,13 @@ export function MobileApp({ id, clock, onClose, children }: MobileAppProps) {
   const app = apps.find((a) => a.id === id);
 
   return (
-    <div className="os-app-enter absolute inset-0 z-50 flex flex-col bg-cream text-ink">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 12 }}
+      transition={{ type: "spring", bounce: 0.12, visualDuration: 0.32 }}
+      className="absolute inset-0 z-50 flex flex-col bg-cream text-ink"
+    >
       <div className="flex items-center justify-between border-b-2 border-ink bg-paper px-4 pb-1 pt-[max(0.65rem,env(safe-area-inset-top))] font-mono text-xs font-bold">
         <span className="tabular-nums">{clock || "09:41"}</span>
         <span className="text-[10px] uppercase tracking-wider text-muted">
@@ -47,6 +54,6 @@ export function MobileApp({ id, clock, onClose, children }: MobileAppProps) {
       >
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { apps, type AppId } from "./apps";
 import { soundManager } from "@/lib/sound";
 import { IconArt } from "./IconArt";
@@ -80,18 +81,29 @@ export function CommandPalette({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, filteredApps, selectedIndex, onClose, onSelectApp]);
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-[999] flex items-start justify-center pt-24 px-4">
-      {/* Backdrop */}
+    <AnimatePresence>
+    {isOpen && (
+    <motion.div
+      key="command-palette"
+      className="fixed inset-0 z-[999] flex items-start justify-center pt-24 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.16 }}
+    >
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-ink/40 backdrop-blur-[2px] transition-opacity"
+        className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]"
       />
 
-      {/* Modal Box */}
-      <div className="relative w-full max-w-lg border-3 border-ink bg-cream p-0 nb-shadow-lg z-10 animate-in fade-in zoom-in-95 duration-100">
+      <motion.div
+        className="relative w-full max-w-lg border-3 border-ink bg-cream p-0 nb-shadow-lg z-10"
+        initial={{ y: -10, scale: 0.98, opacity: 0 }}
+        animate={{ y: 0, scale: 1, opacity: 1 }}
+        exit={{ y: -8, scale: 0.98, opacity: 0 }}
+        transition={{ type: "spring", bounce: 0.2, visualDuration: 0.28 }}
+      >
         {/* Header */}
         <div className="flex items-center gap-2 border-b-2 border-ink bg-titlebar px-3 py-2">
           <Terminal width={16} height={16} className="text-ink" />
@@ -191,7 +203,9 @@ export function CommandPalette({
           </div>
           <span>UDAAN DIGITAL OS</span>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+    )}
+    </AnimatePresence>
   );
 }

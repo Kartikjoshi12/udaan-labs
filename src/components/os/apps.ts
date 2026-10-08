@@ -16,7 +16,7 @@ export const apps: {
   dotColor: string;
 }[] = [
   { id: "about", label: "About Us", code: "01_ABOUT", fill: "#f7c948", dotColor: "#2d8a4e" },
-  { id: "projects", label: "Projects", code: "02_WORK", fill: "#e45826", dotColor: "#e45826" },
+  { id: "projects", label: "Projects", code: "02_WORK", fill: "#f4ede2", dotColor: "#111111" },
   { id: "services", label: "Services", code: "03_SERV", fill: "#eedec4", dotColor: "#2563eb" },
   { id: "process", label: "Process", code: "04_PROC", fill: "#e3f3e8", dotColor: "#2d8a4e" },
   { id: "terminal", label: "Terminal", code: "05_CLI", fill: "#e3f3e8", dotColor: "#2d8a4e" },

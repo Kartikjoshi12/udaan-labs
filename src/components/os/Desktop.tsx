@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { site } from "@/lib/site";
 import { type AppId } from "./apps";
 import { CommandPalette } from "./CommandPalette";
@@ -217,15 +218,18 @@ export function Desktop() {
             setCmdOpen(true);
           }}
         />
-        {mobileApp && (
-          <MobileApp
-            id={mobileApp}
-            clock={clock}
-            onClose={() => setMobileApp(null)}
-          >
-            <WindowContent id={mobileApp} onOpen={openApp} />
-          </MobileApp>
-        )}
+        <AnimatePresence>
+          {mobileApp && (
+            <MobileApp
+              key={mobileApp}
+              id={mobileApp}
+              clock={clock}
+              onClose={() => setMobileApp(null)}
+            >
+              <WindowContent id={mobileApp} onOpen={openApp} />
+            </MobileApp>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="absolute inset-0 z-[1] hidden md:block">
@@ -300,32 +304,85 @@ export function Desktop() {
         {mounted && <DesktopPet />}
         {mounted && <PixelClickBursts />}
 
-        {/* Studio Desk Watermark */}
-        <div className="pointer-events-none absolute right-8 bottom-16 z-10 hidden xl:block font-mono text-[11px] text-muted/60 select-none">
-          <div className="border border-ink/20 bg-cream/70 p-3 nb-shadow-sm max-w-[240px] backdrop-blur-[2px]">
-            <div className="flex items-center justify-between border-b border-ink/20 pb-1.5 mb-1.5">
-              <span className="font-bold text-ink text-[10px] tracking-wider">UDAAN LABS</span>
-              <span className="text-[9px] text-green font-bold flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-green" /> AVAILABLE
-              </span>
-            </div>
-            <p className="text-[10px] text-muted">Apps & websites built directly.</p>
-          </div>
-        </div>
+        <AnimatePresence>
+          {openApps.length === 0 && (
+            <motion.div
+              key="studio-sheet"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ type: "spring", bounce: 0.16, visualDuration: 0.4 }}
+              className="pointer-events-none absolute z-30"
+              style={{ left: 260, top: 54, width: 420 }}
+            >
+              <div className="pointer-events-auto w-full overflow-hidden border-2 border-ink bg-cream nb-shadow-lg">
+                <div className="flex h-9 items-center justify-between border-b-2 border-ink bg-titlebar px-2 font-mono text-[11px] font-bold">
+                  <span>UL_ / STUDIO</span>
+                  <span className="text-[10px] font-medium text-muted">{site.projects[0].title}</span>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => openApp("projects")}
+                    className="block w-full border-b-2 border-ink"
+                  >
+                    <img
+                      src={site.projects[0].image}
+                      alt={site.projects[0].title}
+                      className="h-32 w-full object-cover"
+                    />
+                  </button>
+                  <div className="space-y-3 px-3 py-3">
+                    <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-[1.05] tracking-tight">
+                      {site.hero.sheet}
+                    </h1>
+                    <p className="font-mono text-xs leading-relaxed text-muted">
+                      We make{" "}
+                      <a href="/saas" className="font-bold text-ink underline">SaaS products</a>,{" "}
+                      <a href="/web-apps" className="font-bold text-ink underline">web apps</a>,{" "}
+                      <a href="/mobile-apps" className="font-bold text-ink underline">mobile apps</a>, and{" "}
+                      <a href="/custom-software" className="font-bold text-ink underline">custom software</a>.
+                    </p>
+                    <p className="font-mono text-xs leading-relaxed text-muted">
+                      <span className="font-bold text-ink">{site.projects[0].title}.</span>{" "}
+                      {site.projects[0].blurb}
+                    </p>
+                    <div className="flex flex-wrap gap-3 font-mono text-[10px] font-bold">
+                      <a href="/projects" className="underline">
+                        Projects
+                      </a>
+                      <a href="/services" className="underline">
+                        Services
+                      </a>
+                      <a href="/contact" className="underline">
+                        Contact
+                      </a>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => openApp("contact")}
+                        className="nb-btn px-4 py-2 text-xs"
+                        style={{ background: "#e45826", color: "#fbf8f2" }}
+                      >
+                        Start a project
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => openApp("projects")}
+                        className="nb-btn px-4 py-2 text-xs hover:bg-yellow"
+                      >
+                        See our work
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {openApps.length === 0 && (
-          <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
-            <div className="border-2 border-ink bg-cream px-6 py-4 text-center text-sm nb-shadow max-w-md">
-              <p className="font-mono font-bold text-xs uppercase tracking-wider text-orange mb-1">
-                WORKSPACE
-              </p>
-              <p className="text-xs text-muted leading-relaxed">
-                Open any desktop tool or use the taskbar to explore work.
-              </p>
-            </div>
-          </div>
-        )}
-
+        <AnimatePresence>
         {openApps.map((id) => {
           const metrics = getResponsiveWindowMetrics(id, mounted);
           return (
@@ -349,6 +406,7 @@ export function Desktop() {
             </Window>
           );
         })}
+        </AnimatePresence>
 
         {startOpen && (
           <div className="absolute bottom-14 left-3 z-[110] w-[min(300px,calc(100%-1.5rem))] border-2 border-ink bg-cream nb-shadow-lg">

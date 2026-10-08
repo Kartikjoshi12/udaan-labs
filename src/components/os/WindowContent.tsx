@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { site } from "@/lib/site";
 import { soundManager } from "@/lib/sound";
 import type { AppId } from "./apps";
@@ -148,13 +149,20 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
                   soundManager.playFocus();
                   setActiveTab(tab);
                 }}
-                className={`px-2 py-0.5 text-[10px] font-bold uppercase transition-colors border border-ink ${
-                  activeTab === tab
-                    ? "bg-ink text-cream shadow-[1px_1px_0_0_#ff4d00]"
-                    : "bg-cream text-muted hover:text-ink hover:bg-yellow-soft"
+                className={`relative px-2 py-0.5 text-[10px] font-bold uppercase border border-ink ${
+                  activeTab === tab ? "text-cream" : "bg-cream text-muted hover:text-ink hover:bg-yellow-soft"
                 }`}
               >
-                {tab === "overview" ? "01 Overview" : tab === "stack" ? "02 Tech Stack" : "03 Live Telemetry"}
+                {activeTab === tab && (
+                  <motion.span
+                    layoutId="about-tab"
+                    className="absolute inset-0 bg-ink"
+                    transition={{ type: "spring", bounce: 0.18, visualDuration: 0.28 }}
+                  />
+                )}
+                <span className="relative">
+                  {tab === "overview" ? "Overview" : tab === "stack" ? "Stack" : "Telemetry"}
+                </span>
               </button>
             ))}
           </div>
@@ -163,11 +171,18 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
         <div className="grid gap-6 lg:grid-cols-12 items-center">
           {/* Main Editorial Statement / Dynamic Tab Content */}
           <div className="lg:col-span-7 space-y-4">
+            <AnimatePresence mode="wait">
             {activeTab === "overview" && (
-              <>
-                <h1 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-ink uppercase animate-fadeIn">
+              <motion.div
+                key="overview"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-ink uppercase">
                   {site.hero.h1}
-                </h1>
+                </h2>
 
                 <p className="text-sm sm:text-base leading-relaxed text-muted max-w-xl">
                   {site.hero.subtitle}
@@ -176,11 +191,18 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
                 <div className="border-l-2 border-orange pl-3 py-1 font-mono text-xs text-ink/90 font-medium">
                   {site.hero.positioning}
                 </div>
-              </>
+              </motion.div>
             )}
 
             {activeTab === "stack" && (
-              <div className="space-y-3 font-mono text-xs animate-fadeIn">
+              <motion.div
+                key="stack"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3 font-mono text-xs"
+              >
                 <div className="flex items-center gap-2">
                   <span className="border border-ink bg-yellow px-2 py-0.5 text-[10px] font-bold">
                     ENGINEERING CAPABILITIES
@@ -208,11 +230,18 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
                 <p className="text-[11px] text-muted leading-relaxed pt-1">
                   We pick technologies that reduce maintenance debt and deliver sub-second performance.
                 </p>
-              </div>
+              </motion.div>
             )}
 
             {activeTab === "metrics" && (
-              <div className="space-y-3 font-mono text-xs animate-fadeIn">
+              <motion.div
+                key="metrics"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3 font-mono text-xs"
+              >
                 <div className="flex items-center gap-2">
                   <span className="border border-ink bg-green px-2 py-0.5 text-[10px] font-bold text-cream">
                     STUDIO BENCHMARKS
@@ -243,8 +272,9 @@ function AboutWindow({ onOpen }: { onOpen?: (id: AppId) => void }) {
                   <Zap width={12} height={12} className="pixel-icon text-orange shrink-0" />
                   <span>Working builds deployed every Friday for client review & interactive sign-off.</span>
                 </div>
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
 
             <div className="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
               <button

@@ -8,6 +8,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
+import { motion } from "motion/react";
 import { Checkbox, Close, Minus } from "pixelarticons/react";
 
 type WindowProps = {
@@ -259,8 +260,12 @@ export function Window({
   const handleClass = "absolute z-20 bg-transparent touch-none";
 
   return (
-    <div
+    <motion.div
       ref={frame}
+      initial={{ opacity: 0, x: 8, y: 10, scale: 0.97 }}
+      animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      transition={{ type: "spring", bounce: 0.18, visualDuration: 0.28 }}
       role="dialog"
       aria-label={title}
       onMouseDown={(e) => {
@@ -271,6 +276,7 @@ export function Window({
       style={
         maximized
           ? {
+              transformOrigin: "12px 12px",
               zIndex: Math.max(zIndex, 50),
               top: "3rem",
               left: "0.5rem",
@@ -280,6 +286,7 @@ export function Window({
               height: "auto",
             }
           : {
+              transformOrigin: "12px 12px",
               zIndex,
               left: pos.x,
               top: pos.y,
@@ -287,9 +294,7 @@ export function Window({
               height: size.h,
             }
       }
-      className={`absolute overflow-hidden border-2 border-ink bg-cream nb-shadow-lg ${
-        dragging || resizing ? "" : "os-window-enter"
-      }`}
+      className="absolute overflow-hidden border-2 border-ink bg-cream nb-shadow-lg"
     >
       <div
         data-window-titlebar
@@ -428,6 +433,6 @@ export function Window({
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
